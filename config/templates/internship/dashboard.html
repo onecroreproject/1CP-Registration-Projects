@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background-color: #f2f2f2;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin: 0 10px;
+        }
+
+        button {
+            padding: 8px 16px;
+            margin-left: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr.selected {
+            background-color: #d1ffd1;
+        }
+
+        .action-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            width: 300px;
+            margin-left: 10px;
+        }
+
+    .popup-message {
+        display: none;
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #f0f4ff;
+        color: #003366;
+        border: 1px solid #b3d1ff;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        font-size: 14px;
+        font-weight: 500;
+        z-index: 9999;
+        transition: opacity 0.3s ease;
+        animation: fadeInOut 4s ease-in-out forwards;
+    }
+    @keyframes fadeInOut {
+        0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+        10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        90% { opacity: 1; }
+        100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+    }
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+    }
+@media (max-width: 576px) {
+    body,
+    h2,
+    label,
+    button,
+    table,
+    th,
+    td,
+    input,
+    .popup-message {
+        font-size: 14px !important;
+    }
+
+    h2 {
+        font-size: 18px !important;
+        text-align: center;
+    }
+
+    .container-fluid,
+    .table-responsive,
+    table {
+        width: 100% !important;
+    }
+
+    button {
+        width: 100% !important;
+        padding: 10px;
+        font-size: 15px !important;
+    }
+
+    input[type="text"] {
+        width: 100% !important;
+        font-size: 14px !important;
+    }
+
+    .table-responsive table {
+        font-size: 13px !important;
+    }
+
+    .action-section {
+        padding: 10px !important;
+    }
+}
+
+</style>
+<script>
+
+    function showActions(teamId, balanceAmount) {
+        document.getElementById('selectedTeamInput').value = teamId;
+        document.getElementById('actionSections').style.display = 'block';
+        document.getElementById('balanceAmountText').innerText = '₹' + balanceAmount;
+
+        const radios = document.querySelectorAll('input[name="action_type"]');
+        radios.forEach(r => r.checked = false);
+        toggleSection();
+    }
+    function toggleSection() {
+        const selected = document.querySelector('input[name="action_type"]:checked');
+        document.getElementById('fullInput').style.display = (selected?.value === 'full') ? 'block' : 'none';
+    }
+
+    function showPopupMessage(message) {
+        const popup = document.getElementById("popupMessage");
+        popup.innerText = message;
+        popup.style.display = "block";
+        popup.style.animation = "none";
+        void popup.offsetWidth;
+        popup.style.animation = null;
+        setTimeout(() => {
+            popup.style.display = "none";
+        }, 4000);
+    }
+
+
+    function handleFullPay() {
+        try {
+            const balanceText = document.getElementById('balanceAmountText').innerText;
+            const amount = parseFloat(balanceText.replace('₹', ''));
+            const teamId = document.getElementById('selectedTeamInput').value;
+
+            if (!teamId) {
+                showPopupMessage("Choose one.");
+                return;
+            }
+            if (isNaN(amount) || amount <= 0) {
+                showPopupMessage("Enter the valid amount.");
+                return;
+            }
+            payNow(amount, teamId, 'Full');
+        } catch (error) {
+            console.error("Full Pay Error:", error);
+            showPopupMessage("Something went wrong with Full Payment.");
+        }
+    }
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            const selected = document.querySelector('input[name="action_type"]:checked')?.value;
+
+            if (!selected) {
+                event.preventDefault();
+                showPopupMessage("Choose one.");
+                return;
+            }
+
+            if (selected === 'topic') {
+                event.preventDefault();
+                const topicInput = document.querySelector('input[name="topic_text"]');
+                if (!topicInput.value.trim()) {
+                    showPopupMessage("Enter the topic.");
+                } else {
+                    document.querySelector('button[name="submit_action"][value="update_topic"]').click();
+                }
+            }
+
+            if (selected === 'advance') {
+                event.preventDefault();
+                handleAdvancePay();
+            }
+
+            if (selected === 'full') {
+                event.preventDefault();
+                handleFullPay();
+            }
+        }
+    });
+
+    function payNow(amount, teamId, paymentType) {
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = ""; 
+
+        const csrfInput = document.querySelector('[name=csrfmiddlewaretoken]');
+        if (csrfInput) {
+            const csrf = document.createElement("input");
+            csrf.type = "hidden";
+            csrf.name = "csrfmiddlewaretoken";
+            csrf.value = csrfInput.value;
+            form.appendChild(csrf);
+        }
+
+        const teamInput = document.createElement("input");
+        teamInput.type = "hidden";
+        teamInput.name = "selected_team_id";
+        teamInput.value = teamId;
+        form.appendChild(teamInput);
+
+        const amountInput = document.createElement("input");
+        amountInput.type = "hidden";
+        amountInput.name = "advance_amount";
+        amountInput.value = amount;
+        form.appendChild(amountInput);
+
+        const actionInput = document.createElement("input");
+        actionInput.type = "hidden";
+        actionInput.name = "submit_action";
+        actionInput.value = paymentType.toLowerCase() === 'advance' ? "advance_pay" : "full_pay";
+        form.appendChild(actionInput);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+
+
+
+
+</head>
+<body>
+
+<h2>Internship Payment Dashboard</h2>
+
+{% if not_registered %}
+    <p class="error-message">This email ({{ email }}) is not a registered email.</p>
+{% endif %}
+
+{% if registrations %}
+<form method="POST">
+    {% csrf_token %}
+    <div class="container-fluid px-2">
+    <div class="table-responsive">
+    <table class="table table-bordered w-100">
+        <thead>
+            <tr>
+                <th>Select</th>
+                <th>Team ID</th>
+                <th>Registered Date</th>
+                <th>Student Names</th>
+                <th>Contact Numbers</th>
+                <th>WhatsApp Numbers</th>
+                <th>Emails</th>
+                <th>Total</th>
+                <th>Paid</th>
+                <th>Balance</th>
+            </tr><br>
+        </thead>
+        <tbody>
+            {% for reg in registrations %}
+                <tr>
+                    <td>
+                        <input type="radio" name="team_select" value="{{ reg.team_id }}" onchange="showActions('{{ reg.team_id }}', '{{ reg.balance_amount }}')">
+                    </td>
+                    <td>{{ reg.team_id }}</td>
+                    <td>{{ reg.date|date:"d-m-Y" }}</td>
+                    <td>
+                            {% for student in reg.students.all %}
+                                    {{ student.student_name }}
+                            {% endfor %}
+                    </td>
+                    <td>
+                            {% for student in reg.students.all %}
+                                {{ student.contact_no }}
+                            {% endfor %}
+                    </td>
+                    <td>
+                            {% for student in reg.students.all %}
+                                    {{ student.whatsapp_no }}
+                            {% endfor %}
+                    </td>
+                    <td>
+                            {% for student in reg.students.all %}
+                                    {{ student.email_id }}
+                            {% endfor %}
+                    </td>
+                    <td>{{ reg.total_amount }}</td>
+                    <td>{{ reg.paid_amount }}</td>
+                    <td>{{ reg.balance_amount }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    </div>
+
+    <input type="hidden" id="selectedTeamInput" name="selected_team_id" value="">
+
+    <div id="actionSections" class="action-section" style="display:none;">
+        <label><input type="radio" name="action_type" value="full" onclick="toggleSection()"> Full Payment</label>
+
+        <div id="fullInput" style="margin-top: 15px; display:none;">
+            <p>Total Balance: <span id="balanceAmountText">₹0</span></p>
+            <button type="button" onclick="handleFullPay()">Pay Now</button>
+        </div>
+    </div>
+</form>
+{% else %}
+    {% if not not_registered %}
+        <p style="text-align:center;">No registrations found.</p>
+    {% endif %}
+{% endif %}
+
+
+<div id="popupMessage" class="popup-message"></div>
+
+<div style="text-align: center; margin-top: 30px;">
+    <a href="https://1croreprojects.com/" style="text-decoration: none;margin-bottom: 20px;background-color: #45a049;color: white;padding: 5px;">
+    Back
+    </a>
+</div>
+
+
+
+</body>
+</html>

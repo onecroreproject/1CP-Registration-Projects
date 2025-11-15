@@ -1,0 +1,112 @@
+/* Background styling */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+  height: 100%;
+  background: url('https://cutewallpaper.org/21/animated-gif-wallpaper/Animated-Gif-Wallpaper-78-images-in-Collection-Page-2.gif') no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Centering container */
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Card styling */
+.signup-card {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  width: 370px;
+  animation: slideUp 1s ease-in-out;
+}
+
+/* Title */
+.signup-card h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #003f5c;
+  font-size: 28px;
+}
+
+/* Form groups */
+.form-group {
+  text-align: left;
+  margin-bottom: 18px;
+}
+
+/* Labels */
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #444;
+}
+
+/* Inputs */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+  width: 100%;
+  padding: 12px 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #6658ea;
+  outline: none;
+  box-shadow: 0 0 5px rgba(102, 88, 234, 0.6);
+}
+
+/* Submit button */
+button.btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: 10px;
+}
+
+button.btn:hover {
+  transform: scale(1.05);
+}
+
+/* Login link */
+.login-link {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.login-link p {
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.btn.secondary {
+  background: none;
+  color: #6e8efb;
+  border: none;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Slide animation */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}

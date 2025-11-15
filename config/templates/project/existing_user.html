@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>1Crore - Projects</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-green-energy-renewable-energy-flaticons-flat-flat-icons.png"
+        type="image/x-icon" />
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+            color: #000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin-top: 50px;
+        }
+
+        h1 {
+            font-weight: 600;
+            text-align: center;
+            color: #fff;
+            background-color: #28a745;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .timeline {
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 0;
+        }
+
+        .timeline li {
+            text-align: center;
+            flex: 1;
+        }
+
+        .timeline-step {
+            width: 20px;
+            height: 20px;
+            margin: 0 auto 5px;
+            border-radius: 50%;
+            background: gray;
+        }
+
+        .active .timeline-step {
+            background: blue;
+        }
+
+        .completed .timeline-step {
+            background: green;
+        }
+
+        .disabled a {
+            pointer-events: none;
+            color: #aaa;
+        }
+
+        .disabled .timeline-step {
+            background: #ccc;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .document-box {
+            background-color: #fff;
+            padding: 40px;
+            border: 1px solid #dee2e6;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+            margin-right: auto;
+            margin-left: auto;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .document-box h2 {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: #28a745;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+            display: block;
+        }
+
+        input[type="email"],
+        input[type="text"] {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #28a745;
+            outline: none;
+        }
+
+        .btn {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 25px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+        }
+
+        .btn-inline {
+            display: inline-block;
+            margin-left: 10px;
+            vertical-align: middle;
+            padding: 10px 20px;
+        }
+
+        .otp-section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .message {
+            font-size: 14px;
+            color: #28a745;
+            margin-top: 5px;
+        }
+
+        .error-message {
+            font-size: 14px;
+            color: red;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 576px) {
+
+            body,
+            h1,
+            h2,
+            label,
+            input,
+            button,
+            .timeline span,
+            .message,
+            .error-message {
+                font-size: 90% !important;
+            }
+
+            h1 {
+                font-size: 18px !important;
+                padding: 8px !important;
+            }
+
+            .document-box h2 {
+                font-size: 18px !important;
+            }
+
+            input[type="email"],
+            input[type="text"] {
+                font-size: 14px !important;
+                padding: 6px 10px !important;
+            }
+
+            .btn {
+                font-size: 14px !important;
+                padding: 6px 16px !important;
+            }
+
+            .timeline {
+                flex-direction: row !important;
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 10px;
+            }
+
+            .timeline li {
+                margin-right: 15px;
+                flex-shrink: 0;
+                font-size: 13px;
+            }
+
+            .timeline li:last-child {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Project Registration Form</h1>
+
+    <div class="container">
+
+        <!-- Timeline -->
+        <ul class="timeline">
+            <li id="step-terms" class="completed">
+                <a href="#">
+                    <div class="timeline-step"></div>
+                    <span>Terms</span>
+                </a>
+            </li>
+            <li id="step-register" class="active">
+                <a href="#">
+                    <div class="timeline-step"></div>
+                    <span>Register</span>
+                </a>
+            </li>
+            <li id="step-payment" class="disabled">
+                <a href="#">
+                    <div class="timeline-step"></div>
+                    <span>Payment</span>
+                </a>
+            </li>
+            <li id="step-success" class="disabled">
+                <a href="#">
+                    <div class="timeline-step"></div>
+                    <span>Success</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Form Section -->
+        <div class="document-box">
+            <h2>Existing Student Verification</h2>
+
+            <form method="POST" id="emailMobileForm">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" id="emailField" required />
+                    <div id="emailMessage" style="margin-top: 10px; font-weight: 500;"></div>
+                </div>
+                <button type="button" class="btn" id="sendOtpBtn" onclick="sendOTP()">Send OTP</button>
+                <button type="button" class="btn btn-inline" id="resendNextToSendBtn" style="display:none;"
+                    onclick="resendOTP()">Resend OTP</button>
+
+                <div class="otp-section" id="otpSection" style="display: none;">
+                    <div class="form-group">
+                        <label>Enter OTP</label>
+                        <input type="text" name="otp" id="otpField" required />
+                        <div id="otpMessage" class="error-message"></div>
+                    </div>
+                    <button type="button" class="btn" onclick="verifyOTP()">Verify OTP</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        let countdownInterval;
+        const countdownSeconds = 60;
+
+        function sendOTP() {
+            const email = document.getElementById("emailField").value.trim();
+            const emailMessage = document.getElementById("emailMessage");
+
+            if (!email) {
+                emailMessage.textContent = "Please enter a valid email.";
+                emailMessage.style.color = "red";
+                return;
+            }
+
+            fetch("/send_otp/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}",
+                },
+                body: JSON.stringify({ email: email }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "sent") {
+                        document.getElementById("otpSection").style.display = "block";
+                        document.getElementById("resendNextToSendBtn").style.display = "none";
+                        document.getElementById("otpField").value = "";
+                        document.getElementById("otpMessage").textContent = "";
+                        startCountdown(countdownSeconds);
+                    } else {
+                        emailMessage.textContent = "Failed to send OTP. Try again.";
+                        emailMessage.style.color = "red";
+                    }
+                })
+                .catch(() => {
+                    emailMessage.textContent = "Error sending OTP. Try again.";
+                    emailMessage.style.color = "red";
+                });
+        }
+
+        function resendOTP() {
+            // Reuse sendOTP for resend logic
+            sendOTP();
+            // Also hide resend button next to send OTP after resend clicked
+            document.getElementById("resendNextToSendBtn").style.display = "none";
+            document.getElementById("otpSection").style.display = "block";
+        }
+
+        function verifyOTP() {
+            const email = document.getElementById("emailField").value.trim();
+            const otp = document.getElementById("otpField").value.trim();
+            const otpMessage = document.getElementById("otpMessage");
+            const emailMessage = document.getElementById("emailMessage");
+
+            if (!otp) {
+                otpMessage.textContent = "Please enter the OTP.";
+                otpMessage.style.color = "red";
+                return;
+            }
+
+            fetch("/verify_otp/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}",
+                },
+                body: JSON.stringify({ email: email, otp: otp }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "verified") {
+                        clearInterval(countdownInterval);
+                        emailMessage.textContent = "OTP verified successfully.";
+                        emailMessage.style.color = "green";
+                        // Hide OTP input and buttons after success
+                        document.getElementById("otpSection").style.display = "none";
+                        document.getElementById("resendNextToSendBtn").style.display = "none";
+                        // Redirect or next step
+                        window.location.href = "/dashboard/";
+                    } else {
+                        otpMessage.textContent = "Invalid OTP. Please try again.";
+                        otpMessage.style.color = "red";
+                    }
+                })
+                .catch(() => {
+                    otpMessage.textContent = "Error verifying OTP. Please try again.";
+                    otpMessage.style.color = "red";
+                });
+        }
+
+        function startCountdown(seconds) {
+            clearInterval(countdownInterval);
+            const emailMessage = document.getElementById("emailMessage");
+            const resendBtnNextToSend = document.getElementById("resendNextToSendBtn");
+            const otpSection = document.getElementById("otpSection");
+
+            countdownInterval = setInterval(() => {
+                if (seconds > 0) {
+                    emailMessage.textContent = `OTP sent to your email. It is valid for ${seconds} seconds.`;
+                    emailMessage.style.color = "green";
+                    resendBtnNextToSend.style.display = "none";
+                    otpSection.style.display = "block";
+                    seconds--;
+                } else {
+                    clearInterval(countdownInterval);
+                    emailMessage.textContent = "OTP expired. Please resend OTP.";
+                    emailMessage.style.color = "red";
+                    resendBtnNextToSend.style.display = "inline-block";
+                    otpSection.style.display = "none";
+                }
+            }, 1000);
+        }
+    </script>
+
+</body>
+
+</html>

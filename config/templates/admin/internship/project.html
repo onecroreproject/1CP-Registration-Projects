@@ -1,0 +1,169 @@
+{% extends "admin/internship/admin_base.html" %}
+
+{% block title %}Create Sales User{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+
+<style>
+  table th,
+  table td {
+    vertical-align: middle !important;
+    font-size: 14px;
+    padding: 10px;
+    white-space: nowrap;
+  }
+
+  table.table-bordered td,
+  table.table-bordered th {
+    border: 2px solid #dee2e6 !important;
+    vertical-align: middle !important;
+  }
+
+  .multiline-cell div {
+    border-bottom: 2px solid #dee2e6;
+    padding: 4px 6px;
+  }
+
+  .multiline-cell div:last-child {
+    border-bottom: none;
+  }
+</style>
+
+
+<div class="page-header ms-5" style="margin-top: 60px;">
+  <div class="row">
+    <div class="col-sm-12 mt-5">
+      <h3 class="page claw-title mt-3">Project</h3>
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_project:main_dashboard' %}">Admin Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_internship:project' %}">Dashboard</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="page-inner">
+    <div class="row">
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-primary bubble-shadow-small">
+                  <i class="fas fa-users"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Total Registrations</p>
+                  <h4 class="card-title">{{ total_ids }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-info bubble-shadow-small">
+                  <i class="fas fa-user-check"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Today Registrations</p>
+                  <h4 class="card-title">{{ daily_ids }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-primary bubble-shadow-small">
+                  <i class="fas fa-users"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Total Delivery</p>
+                  <h4 class="card-title">{{ 0 }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-info bubble-shadow-small">
+                  <i class="fas fa-user-check"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Today Delivery</p>
+                  <h4 class="card-title">{{ 0 }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-success bubble-shadow-small">
+                  <i class="fas fa-luggage-cart"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Total Sales</p>
+                  <h4 class="card-title">₹ {{ total_sales }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-success bubble-shadow-small">
+                  <i class="fas fa-luggage-cart"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Today Sales</p>
+                  <h4 class="card-title">₹ {{ daily_sales_today }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

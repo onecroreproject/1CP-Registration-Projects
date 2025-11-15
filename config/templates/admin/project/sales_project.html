@@ -1,0 +1,380 @@
+{% extends "admin/project/sales_base.html" %}
+
+{% block title %}Create Sales User{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="page-header ms-5" style="margin-top: 60px;">
+  <div class="row">
+    <div class="col-sm-12 mt-5">
+      <h3 class="page claw-title mt-3">Project</h3>
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_project:sales_dashboard' %}">Sales Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_project:sales_project' %}">Project Dashboard</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="page-inner">
+    <div class="row">
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-primary bubble-shadow-small">
+                  <i class="fas fa-users"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Total Registrations</p>
+                  <h4 class="card-title">{{ total_ids }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-info bubble-shadow-small">
+                  <i class="fas fa-user-check"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Today Registrations</p>
+                  <h4 class="card-title">{{ daily_ids }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-primary bubble-shadow-small">
+                  <i class="fas fa-users"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Total Delivery</p>
+                  <h4 class="card-title">{{ 0 }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-info bubble-shadow-small">
+                  <i class="fas fa-user-check"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Today Delivery</p>
+                  <h4 class="card-title">{{ 0 }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-secondary bubble-shadow-small">
+                  <i class="far fa-check-circle"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Domain</p>
+                  <h4 class="card-title">1303</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-success bubble-shadow-small">
+                  <i class="fas fa-luggage-cart"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Sales</p>
+                  <h4 class="card-title">₹ {{ total_sales }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-round">
+          <div class="container mt-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h2>Waiting Cash Payment</h2>
+            </div>
+
+            <!-- Flash Messages -->
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info alert-dismissible fade show text-center auto-hide-alert" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <script>
+              // Wait 4 seconds (4000 ms), then fade out alert
+              setTimeout(function () {
+                document.querySelectorAll('.auto-hide-alert').forEach(function (alert) {
+                  alert.classList.remove('show'); // triggers Bootstrap fade out
+                  setTimeout(() => alert.remove(), 500); // remove after fade transition
+                });
+              }, 4000);
+            </script>
+
+            <!-- Payment Table -->
+            <table class="table table-bordered table-striped text-center">
+              <thead class="table-dark">
+                <tr>
+                  <th style="text-transform: none;">Bill No</th>
+                  <th style="text-transform: none;">Name</th>
+                  <th style="text-transform: none;">Email</th>
+                  <th style="text-transform: none;">Phone</th>
+                  <th style="text-transform: none;">Amount (₹)</th>
+                  <th style="text-transform: none;">Payment Option</th>
+                  <th style="text-transform: none;">Payment Method</th>
+                  <th style="text-transform: none;">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for payment in payments %}
+                <tr>
+                  <td>{{ payment.bill_no }}</td>
+                  <td>{{ payment.name }}</td>
+                  <td>{{ payment.email }}</td>
+                  <td>{{ payment.phone }}</td>
+                  <td>{{ payment.amount }}</td>
+                  <td>
+                    {% if payment.selected_payment_option %}
+                    {{ payment.selected_payment_option|title }}
+                    {% else %}
+                    <span class="text-muted">N/A</span>
+                    {% endif %}
+                  </td>
+                  <td>{{ payment.selected_payment_method|title }}</td>
+                  <td>
+                    <button class="btn btn-success btn-sm accept-btn" data-id="{{ payment.id }}"
+                      data-amount="{{ payment.amount }}">Accept</button>
+                    <button class="btn btn-danger btn-sm decline-btn" data-id="{{ payment.id }}">Decline</button>
+                    <button class="btn btn-warning btn-sm edit-btn" data-id="{{ payment.id }}"
+                      data-name="{{ payment.name }}" data-email="{{ payment.email }}" data-phone="{{ payment.phone }}"
+                      data-amount="{{ payment.amount }}">
+                      Edit</button>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="7" class="text-danger">No pending cash payments found.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Accept Modal -->
+          <div class="modal fade" id="acceptModal" tabindex="-1">
+            <div class="modal-dialog">
+              <form method="POST" action="{% url 'admin_project:sales_accept_payment' %}">
+                {% csrf_token %}
+                <input type="hidden" name="payment_id" id="acceptPaymentId">
+                <input type="hidden" name="amount" id="acceptAmount">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Confirm Acceptance</h5>
+                  </div>
+                  <div class="modal-body text-center">
+                    Confirm payment of ₹<strong><span id="confirmAmountText"></span></strong>?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Confirm</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Decline Modal -->
+          <div class="modal fade" id="declineModal" tabindex="-1">
+            <div class="modal-dialog">
+              <form method="POST" action="{% url 'admin_project:sales_decline_payment' %}">
+                {% csrf_token %}
+                <input type="hidden" name="payment_id" id="declinePaymentId">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Decline Confirmation</h5>
+                  </div>
+                  <div class="modal-body">
+                    <p class="text-center">Are you sure you want to <strong>decline</strong> this payment?</p>
+                    <div class="form-group">
+                      <label for="decline_reason" class="form-label">Reason for Decline</label>
+                      <textarea name="decline_reason" id="declineReason" class="form-control" rows="3"
+                        required></textarea>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Yes, Decline</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Edit Modal -->
+          <div class="modal fade" id="editModal" tabindex="-1">
+            <div class="modal-dialog">
+              <form method="POST" action="{% url 'admin_project:sales_edit_payment' %}">
+                {% csrf_token %}
+                <input type="hidden" name="payment_id" id="editPaymentId">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Edit Payment</h5>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group mb-3">
+                      <label>Name</label>
+                      <input type="text" name="name" id="editName" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label>Email</label>
+                      <input type="email" name="email" id="editEmail" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label>Phone</label>
+                      <input type="text" name="phone" id="editPhone" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label>Amount</label>
+                      <input type="number" step="0.01" name="amount" id="editAmount" class="form-control" required>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+
+
+          <script>
+            $(document).ready(function () {
+              $('.accept-btn').click(function () {
+                const id = $(this).data('id');
+                const amount = $(this).data('amount');
+                $('#acceptPaymentId').val(id);
+                $('#acceptAmount').val(amount);
+                $('#confirmAmountText').text(amount);
+                $('#acceptModal').modal('show');
+              });
+
+              $('.decline-btn').click(function () {
+                const id = $(this).data('id');
+                $('#declinePaymentId').val(id);
+                $('#declineReason').val('');
+                $('#declineModal').modal('show');
+              });
+              $('.edit-btn').click(function () {
+                const id = $(this).data('id');
+                const name = $(this).data('name');
+                const email = $(this).data('email');
+                const phone = $(this).data('phone');
+                const amount = $(this).data('amount');
+
+                $('#editPaymentId').val(id);
+                $('#editName').val(name);
+                $('#editEmail').val(email);
+                $('#editPhone').val(phone);
+                $('#editAmount').val(amount);
+
+                $('#editModal').modal('show');
+              });
+            });
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- JS to Remember Last Open Menu -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggleLinks = document.querySelectorAll('[data-bs-toggle="collapse"]');
+
+    // Restore last opened
+    const lastOpen = localStorage.getItem("sidebarActive");
+    if (lastOpen) {
+      const collapseDiv = document.querySelector(lastOpen);
+      const toggleBtn = document.querySelector(`[href="${lastOpen}"]`);
+      if (collapseDiv && toggleBtn) {
+        collapseDiv.classList.add("show");
+        toggleBtn.setAttribute("aria-expanded", "true");
+      }
+    }
+
+    // Save open/close state
+    toggleLinks.forEach(link => {
+      link.addEventListener("click", function () {
+        const targetId = this.getAttribute("href");
+        const targetMenu = document.querySelector(targetId);
+        const isOpen = targetMenu.classList.contains("show");
+
+        if (isOpen) {
+          localStorage.removeItem("sidebarActive");
+        } else {
+          localStorage.setItem("sidebarActive", targetId);
+        }
+      });
+    });
+  });
+</script>
+
+{% endblock %}

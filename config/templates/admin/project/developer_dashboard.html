@@ -1,0 +1,1520 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Admin-Developer Dashboard</title>
+  <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+  <link rel="icon" href="{% static 'assets/img/kaiadmin/favicon.ico' %}" type="image/x-icon" />
+
+  <!-- Fonts and icons -->
+  <script src="{% static 'assets/js/plugin/webfont/webfont.min.js' %}"></script>
+  <script>
+    WebFont.load({
+      google: { families: ["Public Sans:300,400,500,600,700"] },
+      custom: {
+        families: [
+          "Font Awesome 5 Solid",
+          "Font Awesome 5 Regular",
+          "Font Awesome 5 Brands",
+          "simple-line-icons",
+        ],
+        urls: ["{% static 'assets/css/fonts.min.css' %}"],
+      },
+      active: function () {
+        sessionStorage.fonts = true;
+      },
+    });
+  </script>
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/css/plugins.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/css/kaiadmin.min.css' %}" />
+
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" />
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+  <!-- FixedColumns Extension -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.dataTables.min.css">
+  <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
+
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    th,
+    td {
+      white-space: nowrap;
+    }
+
+    th.freeze {
+      background-color: #d1ecf1 !important;
+    }
+  </style>
+
+  <style>
+    table th,
+    table td {
+      vertical-align: middle !important;
+      font-size: 12px;
+      padding: 8px;
+      white-space: nowrap;
+    }
+
+    table.table-bordered td,
+    table.table-bordered th {
+      border: 1px solid #dee2e6 !important;
+      vertical-align: middle !important;
+    }
+
+    .multiline-cell div {
+      border-bottom: 1px solid #dee2e6;
+      padding: 1px 2px;
+    }
+
+    .multiline-cell div:last-child {
+      border-bottom: none;
+    }
+
+    .editable {
+      cursor: text;
+    }
+
+    .editable:hover {
+      background-color: bisque;
+      padding: 10px;
+      border-radius: 3px;
+    }
+
+    .sticky-col {
+      position: sticky;
+      background: white;
+      z-index: 2;
+    }
+
+    thead .sticky-col {
+      top: 0;
+      z-index: 3;
+    }
+
+    table th,
+    table td {
+      white-space: nowrap;
+    }
+
+    .card-hover:hover {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      transform: translateY(-4px);
+      transition: 0.3s ease;
+      cursor: pointer;
+      background-color: #f8f9fa;
+      border-radius: 10px;
+    }
+  </style>
+
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar" data-background-color="dark">
+      <div class="sidebar-logo">
+        <!-- Logo Header -->
+        <div class="logo-header" data-background-color="dark">
+          <a href="{% url 'admin_project:developer_dashboard' %}" class="logo">
+            <img src="{% static 'images/watermark.webp' %}" alt="navbar brand" class="navbar-brand" height="40" />
+          </a>
+          <div class="nav-toggle">
+            <button class="btn btn-toggle toggle-sidebar">
+              <i class="gg-menu-right"></i>
+            </button>
+            <button class="btn btn-toggle sidenav-toggler">
+              <i class="gg-menu-left"></i>
+            </button>
+          </div>
+          <button class="topbar-toggler more">
+            <i class="gg-more-vertical-alt"></i>
+          </button>
+        </div>
+        <!-- End Logo Header -->
+      </div>
+      <div class="sidebar-wrapper scrollbar scrollbar-inner">
+        <div class="sidebar-content">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+                href="#studentDataCollapse" role="button" aria-expanded="false" aria-controls="studentDataCollapse">
+                <span>
+                  <i class="fas fa-user-graduate me-2"></i> Student Data
+                </span>
+                <i class="fas fa-caret-down"></i>
+              </a>
+              <div class="collapse" id="studentDataCollapse">
+                <ul class="nav flex-column ms-3 mt-1">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin_project:developer_dashboard' %}">
+                      <i class="fas fa-table me-2"></i>View Student Data
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- End Sidebar -->
+
+    <div class="main-panel">
+      <div class="main-header">
+        <div class="main-header-logo">
+          <!-- Logo Header -->
+          <div class="logo-header" data-background-color="dark">
+            <a href="{% url 'admin_project:main_dashboard' %}" class="logo">
+              <img src="{% static 'assets/img/kaiadmin/logo_light.svg' %}" alt="navbar brand" class="navbar-brand"
+                height="20" />
+            </a>
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar">
+                <i class="gg-menu-right"></i>
+              </button>
+              <button class="btn btn-toggle sidenav-toggler">
+                <i class="gg-menu-left"></i>
+              </button>
+            </div>
+            <button class="topbar-toggler more">
+              <i class="gg-more-vertical-alt"></i>
+            </button>
+          </div>
+          <!-- End Logo Header -->
+        </div>
+        <!-- Navbar Header -->
+        <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+          <div class="container-fluid">
+            <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <button type="submit" class="btn btn-search pe-1">
+                    <i class="fa fa-search search-icon"></i>
+                  </button>
+                </div>
+                <input type="text" placeholder="Search ..." class="form-control" />
+              </div>
+            </nav>
+
+            <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+              <li class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                  aria-expanded="false" aria-haspopup="true">
+                  <i class="fa fa-search"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-search animated fadeIn">
+                  <form class="navbar-left navbar-form nav-search">
+                    <div class="input-group">
+                      <input type="text" placeholder="Search ..." class="form-control" />
+                    </div>
+                  </form>
+                </ul>
+              </li>
+              <li class="nav-item topbar-icon dropdown hidden-caret">
+                <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button"
+                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-envelope"></i>
+                </a>
+                <ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="messageDropdown">
+                  <li>
+                    <div class="dropdown-title d-flex justify-content-between align-items-center">
+                      Messages
+                      <a href="#" class="small">Mark all as read</a>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="message-notif-scroll scrollbar-outer">
+                      <div class="notif-center">
+                        <a href="#">
+                          <div class="notif-img">
+                            <img src="{% static 'assets/img/jm_denis.jpg' %}" alt="Img Profile" />
+                          </div>
+                          <div class="notif-content">
+                            <span class="subject">Jimmy Denis</span>
+                            <span class="block"> How are you ? </span>
+                            <span class="time">5 minutes ago</span>
+                          </div>
+                        </a>
+                        <a href="#">
+                          <div class="notif-img">
+                            <img src="{% static 'assets/img/chadengle.jpg' %}" alt="Img Profile" />
+                          </div>
+                          <div class="notif-content">
+                            <span class="subject">Chad</span>
+                            <span class="block"> Ok, Thanks ! </span>
+                            <span class="time">12 minutes ago</span>
+                          </div>
+                        </a>
+                        <a href="#">
+                          <div class="notif-img">
+                            <img src="{% static 'assets/img/mlane.jpg' %}" alt="Img Profile" />
+                          </div>
+                          <div class="notif-content">
+                            <span class="subject">Jhon Doe</span>
+                            <span class="block">
+                              Ready for the meeting today...
+                            </span>
+                            <span class="time">12 minutes ago</span>
+                          </div>
+                        </a>
+                        <a href="#">
+                          <div class="notif-img">
+                            <img src="{% static 'assets/img/talha.jpg' %}" alt="Img Profile" />
+                          </div>
+                          <div class="notif-content">
+                            <span class="subject">Talha</span>
+                            <span class="block"> Hi, Apa Kabar ? </span>
+                            <span class="time">17 minutes ago</span>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <a class="see-all" href="javascript:void(0);">See all messages<i class="fa fa-angle-right"></i>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item topbar-icon dropdown hidden-caret">
+                <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-bs-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-bell"></i>
+                  <span class="notification">4</span>
+                </a>
+                <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
+                  <li>
+                    <div class="dropdown-title">
+                      You have 4 new notification
+                    </div>
+                  </li>
+                  <li>
+                    <div class="notif-scroll scrollbar-outer">
+                      <div class="notif-center">
+                        <a href="#">
+                          <div class="notif-icon notif-primary">
+                            <i class="fa fa-user-plus"></i>
+                          </div>
+                          <div class="notif-content">
+                            <span class="block"> New user registered </span>
+                            <span class="time">5 minutes ago</span>
+                          </div>
+                        </a>
+                        <a href="#">
+                          <div class="notif-icon notif-success">
+                            <i class="fa fa-comment"></i>
+                          </div>
+                          <div class="notif-content">
+                            <span class="block">
+                              Rahmad commented on Admin
+                            </span>
+                            <span class="time">12 minutes ago</span>
+                          </div>
+                        </a>
+                        <a href="#">
+                          <div class="notif-img">
+                            <img src="{% static 'assets/img/profile2.jpg' %}" alt="Img Profile" />
+                          </div>
+                          <div class="notif-content">
+                            <span class="block">
+                              Reza send messages to you
+                            </span>
+                            <span class="time">12 minutes ago</span>
+                          </div>
+                        </a>
+                        <a href="#">
+                          <div class="notif-icon notif-danger">
+                            <i class="fa fa-heart"></i>
+                          </div>
+                          <div class="notif-content">
+                            <span class="block"> Farrah liked Admin </span>
+                            <span class="time">17 minutes ago</span>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <a class="see-all" href="javascript:void(0);">See all notifications<i class="fa fa-angle-right"></i>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item topbar-icon dropdown hidden-caret">
+                <a class="nav-link" data-bs-toggle="dropdown" href="#" aria-expanded="false">
+                  <i class="fas fa-layer-group"></i>
+                </a>
+                <div class="dropdown-menu quick-actions animated fadeIn">
+                  <div class="quick-actions-header">
+                    <span class="title mb-1">Quick Actions</span>
+                    <span class="subtitle op-7">Shortcuts</span>
+                  </div>
+                  <div class="quick-actions-scroll scrollbar-outer">
+                    <div class="quick-actions-items">
+                      <div class="row m-0">
+                        <a class="col-6 col-md-4 p-0" href="#">
+                          <div class="quick-actions-item">
+                            <div class="avatar-item bg-danger rounded-circle">
+                              <i class="far fa-calendar-alt"></i>
+                            </div>
+                            <span class="text">Calendar</span>
+                          </div>
+                        </a>
+                        <a class="col-6 col-md-4 p-0" href="#">
+                          <div class="quick-actions-item">
+                            <div class="avatar-item bg-warning rounded-circle">
+                              <i class="fas fa-map"></i>
+                            </div>
+                            <span class="text">Maps</span>
+                          </div>
+                        </a>
+                        <a class="col-6 col-md-4 p-0" href="#">
+                          <div class="quick-actions-item">
+                            <div class="avatar-item bg-info rounded-circle">
+                              <i class="fas fa-file-excel"></i>
+                            </div>
+                            <span class="text">Reports</span>
+                          </div>
+                        </a>
+                        <a class="col-6 col-md-4 p-0" href="#">
+                          <div class="quick-actions-item">
+                            <div class="avatar-item bg-success rounded-circle">
+                              <i class="fas fa-envelope"></i>
+                            </div>
+                            <span class="text">Emails</span>
+                          </div>
+                        </a>
+                        <a class="col-6 col-md-4 p-0" href="#">
+                          <div class="quick-actions-item">
+                            <div class="avatar-item bg-primary rounded-circle">
+                              <i class="fas fa-file-invoice-dollar"></i>
+                            </div>
+                            <span class="text">Invoice</span>
+                          </div>
+                        </a>
+                        <a class="col-6 col-md-4 p-0" href="#">
+                          <div class="quick-actions-item">
+                            <div class="avatar-item bg-secondary rounded-circle">
+                              <i class="fas fa-credit-card"></i>
+                            </div>
+                            <span class="text">Payments</span>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <li class="nav-item topbar-user dropdown hidden-caret">
+                <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
+                  <div class="avatar-sm">
+                    <img src="{% static 'images/developer.jpg'%}" alt="..." class="avatar-img rounded-circle" />
+                  </div>
+                  <span class="profile-username">
+                    <!-- <span class="op-7">Hi,</span> -->
+                    <span class="fw-bold">Welcome, {{ request.user.username }}</span>
+                  </span>
+                </a>
+                <ul class="dropdown-menu dropdown-user animated fadeIn">
+                  <div class="dropdown-user-scroll scrollbar-outer">
+                    <li>
+                      <div class="user-box">
+                        <div class="avatar-lg">
+                          <img src="{% static 'images/developer.jpg' %}" alt="image profile"
+                            class="avatar-img rounded" />
+                        </div>
+                        <div class="u-text">
+                          <h4>{{ request.user.username }}</h4>
+                          <p class="text-muted">{{ request.user.email }}</p>
+                          <a href="#" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="{% url 'admin_project:logout' %}">Logout</a>
+                    </li>
+                  </div>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <!-- End Navbar -->
+
+        <div class="page-header ms-5">
+          <div class="row">
+            <div class="col-sm-12 mt-5">
+              <h3 class="page claw-title mt-3">Project</h3>
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'admin_project:developer_dashboard' %}">Dashboard</a></li>
+                <li class="breadcrumb-item">Student Data</li>
+                <li class="breadcrumb-item"><a href="{% url 'admin_project:developer_dashboard' %}">View Student
+                    Data</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container" style="margin-top: 200px;">
+        <div class="page-inner">
+
+          <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6 col-md-3">
+              <div class="card card-stats card-round">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-icon">
+                      <div class="icon-big text-center icon-primary bubble-shadow-small">
+                        <i class="fas fa-users"></i>
+                      </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                      <div class="numbers">
+                        <p class="card-category">Total Registrations</p>
+                        <h4 class="card-title">{{ total_ids }}</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <div class="card card-stats card-round">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-icon">
+                      <div class="icon-big text-center icon-info bubble-shadow-small">
+                        <i class="fas fa-user-check"></i>
+                      </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                      <div class="numbers">
+                        <p class="card-category">Today Registrations</p>
+                        <h4 class="card-title">{{ daily_ids }}</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <div class="card card-stats card-round">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-icon">
+                      <div class="icon-big text-center icon-primary bubble-shadow-small">
+                        <i class="fas fa-users"></i>
+                      </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                      <div class="numbers">
+                        <p class="card-category">Total Delivery</p>
+                        <h4 class="card-title">{{ total_delivery }}</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <div class="card card-stats card-round">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-icon">
+                      <div class="icon-big text-center icon-info bubble-shadow-small">
+                        <i class="fas fa-user-check"></i>
+                      </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                      <div class="numbers">
+                        <p class="card-category">Today Delivery</p>
+                        <h4 class="card-title">{{ daily_delivery }}</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="container">
+              <!-- Inline Dropdowns -->
+              <div class="row mb-4">
+                <!-- Domain Dropdown -->
+                <div class="col-sm-6 col-md-3">
+                  <div class="card card-stats card-round">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-icon">
+                          <div class="icon-big text-center icon-info bubble-shadow-small">
+                            <i class="fas fa-user-check"></i>
+                          </div>
+                        </div>
+                        <div class="col col-stats ms-3 ms-sm-0">
+                          <div class="numbers">
+                            <p class="card-category">Domain</p>
+                            <select id="domainSelect" class="form-select">
+                              <option selected disabled>Select Domain</option>
+                              {% for domain in domains %}
+                              <option value="{{ domain.name }}">{{ domain.name }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Payment Dropdown -->
+                <div class="col-sm-6 col-md-3" id="paymentDropdown" style="display: none;">
+                  <div class="card card-stats card-round">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-icon">
+                          <div class="icon-big text-center icon-secondary bubble-shadow-small">
+                            <i class="fas fa-money-check-alt"></i>
+                          </div>
+                        </div>
+                        <div class="col col-stats ms-3 ms-sm-0">
+                          <div class="numbers">
+                            <p class="card-category">Payment</p>
+                            <select id="paymentSelect" class="form-select">
+                              <option selected disabled>Select Payment</option>
+                              <option value="registration">Registration</option>
+                              <option value="advance">Advance</option>
+                              <option value="full">Full</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Status Cards -->
+              <div class="row" id="statusCards" style="display: none;">
+                <!-- Not Started -->
+                <div class="col-sm-6 col-md-3">
+                  <button class="card card-stats card-round w-100 border-0 card-hover card-hover"
+                    onclick="handleStatusClick('Not Started')">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-icon">
+                          <div class="icon-big text-center icon-info bubble-shadow-small">
+                            <i class="fas fa-pause-circle"></i>
+                          </div>
+                        </div>
+                        <div class="col col-stats ms-3 ms-sm-0">
+                          <div class="numbers">
+                            <p class="card-category">Not Started</p>
+                            <h4 class="card-title" id="notStartedCount">{{ status_summary.not_started }}</h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+
+                <!-- On Going -->
+                <div class="col-sm-6 col-md-3">
+                  <button class="card card-stats card-round w-100 border-0 card-hover card-hover"
+                    onclick="handleStatusClick('On Going')">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-icon">
+                          <div class="icon-big text-center icon-warning bubble-shadow-small">
+                            <i class="fas fa-spinner"></i>
+                          </div>
+                        </div>
+                        <div class="col col-stats ms-3 ms-sm-0">
+                          <div class="numbers">
+                            <p class="card-category">On Going</p>
+                            <h4 class="card-title" id="onGoingCount">{{ status_summary.on_going }}</h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+
+                <!-- Completed -->
+                <div class="col-sm-6 col-md-3">
+                  <button class="card card-stats card-round w-100 border-0 card-hover card-hover"
+                    onclick="handleStatusClick('Completed')">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-icon">
+                          <div class="icon-big text-center icon-success bubble-shadow-small">
+                            <i class="fas fa-check-circle"></i>
+                          </div>
+                        </div>
+                        <div class="col col-stats ms-3 ms-sm-0">
+                          <div class="numbers">
+                            <p class="card-category">Completed</p>
+                            <h4 class="card-title" id="completedCount">{{ status_summary.completed }}</h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+
+                <!-- Delivered -->
+                <div class="col-sm-6 col-md-3">
+                  <button class="card card-stats card-round w-100 border-0 card-hover card-hover"
+                    onclick="handleStatusClick('Delivered')">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-icon">
+                          <div class="icon-big text-center icon-primary bubble-shadow-small">
+                            <i class="fas fa-truck"></i>
+                          </div>
+                        </div>
+                        <div class="col col-stats ms-3 ms-sm-0">
+                          <div class="numbers">
+                            <p class="card-category">Delivered</p>
+                            <h4 class="card-title" id="deliveredCount">{{ status_summary.delivered }}</h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+
+                <!-- Cancelled -->
+                <div class="col-sm-6 col-md-3">
+                  <button class="card card-stats card-round w-100 border-0 card-hover card-hover"
+                    onclick="handleStatusClick('Cancelled')">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-icon">
+                          <div class="icon-big text-center icon-danger bubble-shadow-small">
+                            <i class="fas fa-times-circle"></i>
+                          </div>
+                        </div>
+                        <div class="col col-stats ms-3 ms-sm-0">
+                          <div class="numbers">
+                            <p class="card-category">Cancelled</p>
+                            <h4 class="card-title" id="cancelledCount">{{ status_summary.cancelled }}</h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+
+            </div>
+
+            <script>
+              const domainSelect = document.getElementById("domainSelect");
+              const paymentDropdown = document.getElementById("paymentDropdown");
+              const paymentSelect = document.getElementById("paymentSelect");
+              const statusCards = document.getElementById("statusCards");
+
+              let selectedDomain = "";
+              let selectedPayment = "";
+              let selectedStatus = "";
+
+              // Add "All Domains" manually at top
+              window.addEventListener("DOMContentLoaded", () => {
+                const allOption = document.createElement("option");
+                allOption.value = "all";
+                allOption.text = "All Domains";
+                domainSelect.insertBefore(allOption, domainSelect.options[1]); // After placeholder
+              });
+
+              domainSelect.addEventListener("change", function () {
+                selectedDomain = this.value;
+                selectedPayment = "";
+                selectedStatus = "";
+
+                paymentSelect.selectedIndex = 0;
+                paymentDropdown.style.display = "block";
+                statusCards.style.display = "flex"; // Show cards immediately for "All Domains"
+
+                filterTable();
+              });
+
+              paymentSelect.addEventListener("change", function () {
+                selectedPayment = this.value;
+                selectedStatus = "";
+                statusCards.style.display = "flex";
+                filterTable();
+              });
+
+              function handleStatusClick(status) {
+                selectedStatus = status;
+                filterTable();
+              }
+
+              function filterTable() {
+                const rows = document.querySelectorAll('#projectTable tbody tr');
+
+                let statusCounts = {
+                  'Not Started': 0,
+                  'On Going': 0,
+                  'Completed': 0,
+                  'Delivered': 0,
+                  'Cancelled': 0,
+                };
+
+                rows.forEach(row => {
+                  const domain = row.querySelector('[data-field="domain"]')?.innerText.trim().toLowerCase();
+                  const payment = row.querySelector('[data-field="payment"]')?.innerText.trim().toLowerCase();
+                  const status = row.querySelector('[data-field="project_status"]')?.innerText.trim();
+
+                  const isAllDomain = selectedDomain === "all";
+                  const matchDomain = selectedDomain ? (isAllDomain || domain === selectedDomain.toLowerCase()) : true;
+                  const matchPayment = selectedPayment ? payment === selectedPayment.toLowerCase() : true;
+                  const matchStatus = selectedStatus ? status.toLowerCase() === selectedStatus.toLowerCase() : true;
+
+                  const shouldDisplay = matchDomain && matchPayment && matchStatus;
+                  row.style.display = shouldDisplay ? "" : "none";
+
+                  // Update counts
+                  const countMatch =
+                    isAllDomain
+                      ? (selectedPayment ? matchPayment : true) // For "All Domains", count by payment if selected
+                      : (matchDomain && (selectedPayment ? matchPayment : true)); // For specific domains
+
+                  if (countMatch && status in statusCounts) {
+                    statusCounts[status]++;
+                  }
+                });
+
+                // Update status cards
+                document.getElementById('notStartedCount').innerText = statusCounts['Not Started'];
+                document.getElementById('onGoingCount').innerText = statusCounts['On Going'];
+                document.getElementById('completedCount').innerText = statusCounts['Completed'];
+                document.getElementById('deliveredCount').innerText = statusCounts['Delivered'];
+                document.getElementById('cancelledCount').innerText = statusCounts['Cancelled'];
+              }
+            </script>
+          </div>
+
+          {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show text-center mx-auto" role="alert"
+            style="width: 50%;" id="successMessage">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endfor %}
+          {% endif %}
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card card-round">
+                <div class="card-header">
+                  <div class="card-head-row card-tools-still-right">
+                    <h4 class="card-title">Student Project Registration</h4>
+                  </div>
+                </div>
+                <div class="mt-3 d-flex justify-content-end gap-2">
+                  <!-- <button class="btn btn-warning" id="download-selected">Download Selected</button> -->
+                  <button class="btn btn-success" id="bulk-update-btn">Update Selected</button>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="table-responsive">
+                        <table id="projectTable" class="table table-bordered w-100 text-center align-middle mb-0">
+                          <thead class="thead-light">
+                            <tr>
+                              <th data-col="0" style="text-transform: none;">
+                                <div style="white-space: nowrap;">
+                                  <label>
+                                    <input type="checkbox" id="select-all"> Select
+                                  </label><br>
+                                  <label>
+                                    <input type="checkbox" class="freeze-col-checkbox" data-col="0"> Freeze
+                                  </label>
+                                </div>
+                              </th>
+                              <th data-col="1" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="1"> Bill No</th>
+                              <th data-col="2" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="2"> Team ID</th>
+                              <th data-col="3" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="3"> Registration Date</th>
+                              <th data-col="4" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="4"> Delivery Date</th>
+                              <th data-col="5" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="5"> Payment Option</th>
+                              <th data-col="6" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="6"> Project Status</th>
+                              <th data-col="7" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="7"> Name</th>
+                              <th data-col="8" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="8"> Contact</th>
+                              <th data-col="9" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="9"> WhatsApp No</th>
+                              <th data-col="10" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="10"> Email</th>
+                              <th data-col="11" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="11"> College</th>
+                              <th data-col="12" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="12"> Degree</th>
+                              <th data-col="13" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="13"> Department</th>
+                              <th data-col="14" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="14"> Domain</th>
+                              <th data-col="15" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="15"> Topic</th>
+                              <th data-col="16" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="16"> Workflow & Abstract</th>
+                              <th data-col="17" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="17"> PPT</th>
+                              <th data-col="18" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="18"> Output Video</th>
+                              <th data-col="19" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="19"> Source Code</th>
+                              <th data-col="20" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="20"> Document</th>
+                              <th data-col="21" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="21"> Explanation</th>
+                              <th data-col="22" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="22"> Developer Name</th>
+                              <th data-col="23" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="23"> Delivery Person</th>
+                              <th data-col="24" style="text-transform: none;"><input type="checkbox"
+                                  class="freeze-col-checkbox" data-col="24"> Reason</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% if overviews %}
+                            {% for project in overviews %}
+                            <tr data-id="{{ project.id }}" data-team_id="{{ project.team_id }}"
+                              data-delivery_date="{{ project.delivery_date|date:'Y-m-d' }}"
+                              data-project_status="{{ project.project_status }}" data-name="{{ project.name }}"
+                              data-contact="{{ project.contact }}" data-whatsapp_no="{{ project.whatsapp_no }}"
+                              data-email="{{ project.email }}" data-college="{{ project.college_name }}"
+                              data-degree="{{ project.degree }}" data-department="{{ project.department }}"
+                              data-domain="{{ project.domain }}" data-topic="{{ project.topic }}"
+                              data-workflow_abstract="{{ project.workflow_abstract|lower }}"
+                              data-ppt_file="{{ project.ppt_file|lower }}"
+                              data-output_video="{{ project.output_video|lower }}"
+                              data-source_code="{{ project.source_code|lower }}"
+                              data-complete_document="{{ project.complete_document|lower }}"
+                              data-explanation_file="{{ project.explanation_file|lower }}"
+                              data-developer_name="{{ project.developer_name }}"
+                              data-delivery_person_name="{{ project.delivery_person_name }}"
+                              data-reason="{{ project.reason }}">
+                              <!-- Checkbox for multi-select -->
+                              <td data-col="0"><input type="checkbox" class="row-check"></td>
+                              <td data-col="1">{{ project.latest_bill_no }}</td>
+
+                              <!-- team_id: NOT editable -->
+                              <td data-col="2">{{ project.team_id|default:"-" }}</td>
+
+                              <!-- All below fields: Editable -->
+                              <td data-col="3">
+                                <div data-field="created_date">{{ project.date|date:"Y-m-d" }}</div>
+                              </td>
+                              <td data-col="4">
+                                <div data-field="delivery_date">{{ project.delivery_date|date:"Y-m-d" }}</div>
+                              </td>
+                              <td data-col="5">
+                                <div data-field="payment">
+                                  {% if project.related_payments %}
+                                  {{ project.related_payments.0.selected_payment_option|default:"-" }}
+                                  {% else %}
+                                  -
+                                  {% endif %}
+                                </div>
+                              </td>
+                              <td data-col="6">
+                                <div data-field="project_status">{{ project.project_status|default:"Not Started" }}
+                                </div>
+                              </td>
+
+
+                              <td class="multiline-cell" data-col="7">
+                                {% for name in project.name.splitlines %}
+                                <div data-field="name">{{ name }}</div>
+                                {% endfor %}
+                              </td>
+
+                              <td class="multiline-cell" data-col="8">
+                                {% for contact in project.contact.splitlines %}
+                                <div data-field="contact">{{ contact }}</div>
+                                {% endfor %}
+                              </td>
+
+                              <td class="multiline-cell" data-col="9">
+                                {% for whatsapp in project.whatsapp_no.splitlines %}
+                                <div data-field="whatsapp_no">{{ whatsapp }}</div>
+                                {% endfor %}
+                              </td>
+
+                              <td class="multiline-cell" data-col="10">
+                                {% for email in project.email.splitlines %}
+                                <div data-field="email">{{ email }}</div>
+                                {% endfor %}
+                              </td>
+
+                              <td data-col="11">
+                                <div data-field="college">{{ project.college_name|default:"-" }}</div>
+                              </td>
+                              <td data-col="12">
+                                <div data-field="degree">{{ project.degree|default:"-" }}</div>
+                              </td>
+                              <td data-col="13">
+                                <div data-field="department">{{ project.department|default:"-" }}</div>
+                              </td>
+                              <td data-col="14">
+                                <div data-field="domain">{{ project.domain|default:"-" }}</div>
+                              </td>
+                              <td data-col="15">
+                                <div data-field="topic">{{ project.topic|default:"-" }}</div>
+                              </td>
+                              <td data-col="16">
+                                <div data-field="workflow_abstract">{{ project.workflow_abstract|default:"Not Shared" }}
+                                </div>
+                              </td>
+                              <td data-col="17">
+                                <div data-field="ppt_file">{{ project.ppt_file|default:"Not Shared" }}</div>
+                              </td>
+                              <td data-col="18">
+                                <div data-field="output_video">{{ project.output_video|default:"Not Shared" }}</div>
+                              </td>
+                              <td data-col="19">
+                                <div data-field="source_code">{{ project.source_code|default:"Not Shared" }}</div>
+                              </td>
+                              <td data-col="20">
+                                <div data-field="complete_document">{{ project.complete_document|default:"Not Shared" }}
+                                </div>
+                              </td>
+                              <td data-col="21">
+                                <div data-field="explanation_file">{{ project.explanation_file|default:"Not Explained" }}
+                                </div>
+                              </td>
+                              <td data-col="22">
+                                <div data-field="developer_name">{{ project.developer_name|default:"-" }}</div>
+                              </td>
+                              <td data-col="23">
+                                <div data-field="delivery_person_name">{{ project.delivery_person_name|default:"-" }}
+                                </div>
+                              </td>
+                              <td data-col="24">
+                                <div data-field="reason">{{ project.reason|default:"-" }}</div>
+                              </td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                              <td colspan="25" class="text-danger text-center">
+                                No project data available in ProjectRegistration model.
+                              </td>
+                            </tr>
+                            {% endif %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Update Modal -->
+          <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <form id="updateForm" method="POST" action="{% url 'admin_project:update_project' %}">
+                  {% csrf_token %}
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">Update Project Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body row">
+                    <input type="hidden" name="project_id" id="projectId">
+
+                    <!-- Row 1 -->
+                    <div class="col-md-6 mb-3">
+                      <label for="teamId" class="form-label">Team ID</label>
+                      <input type="text" class="form-control" name="team_id" id="teamId">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="deliveryDate" class="form-label">Delivery Date</label>
+                      <input type="date" class="form-control" name="delivery_date" id="deliveryDate">
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="col-md-6 mb-3">
+                      <label for="project_status" class="form-label">Project Status</label>
+                      <select class="form-control" name="project_status" id="project_status" required>
+                        <option value="" disabled selected>Select Status</option>
+                        <option value="Not Started">Not Started</option>
+                        <option value="On Going">On Going</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="name" class="form-label">Student Name(s)</label>
+                      <textarea class="form-control" name="name" id="name" rows="1"></textarea>
+                    </div>
+
+                    <!-- Row 3 -->
+                    <div class="col-md-6 mb-3">
+                      <label for="contact" class="form-label">Contact Number(s)</label>
+                      <textarea class="form-control" name="contact" id="contact" rows="1"></textarea>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="whatsapp_no" class="form-label">WhatsApp Number(s)</label>
+                      <textarea class="form-control" name="whatsapp_no" id="whatsapp_no" rows="1"></textarea>
+                    </div>
+
+                    <!-- Row 4 -->
+                    <div class="col-md-6 mb-3">
+                      <label for="email" class="form-label">Email(s)</label>
+                      <textarea class="form-control" name="email" id="email" rows="1"></textarea>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="college" class="form-label">College</label>
+                      <input type="text" class="form-control" name="college" id="college">
+                    </div>
+
+                    <!-- Row 5 -->
+                    <div class="col-md-6 mb-3">
+                      <label for="degree" class="form-label">Degree</label>
+                      <input type="text" class="form-control" name="degree" id="degree">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="department" class="form-label">Department</label>
+                      <input type="text" class="form-control" name="department" id="department">
+                    </div>
+
+                    <!-- Row 6 -->
+                    <div class="col-md-6 mb-3">
+                      <label for="domain" class="form-label">Domain</label>
+                      <input type="text" class="form-control" name="domain" id="domain">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="topic" class="form-label">Topic</label>
+                      <input type="text" class="form-control" name="topic" id="topic">
+                    </div>
+
+                    <!-- Row 7: Boolean checkboxes -->
+                    <div class="col-md-2 mb-3">
+                      <label for="workflow_abstract" class="form-label">Workflow Abstract</label>
+                      <select class="form-control" name="workflow_abstract" id="workflow_abstract" required>
+                        <option value="shared">Shared</option>
+                        <option value="not shared" selected>Not Shared</option>
+                      </select>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                      <label for="ppt_file" class="form-label">PPT File</label>
+                      <select class="form-control" name="ppt_file" id="ppt_file" required>
+                        <option value="shared">Shared</option>
+                        <option value="not shared" selected>Not Shared</option>
+                      </select>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                      <label for="output_video" class="form-label">Output Video</label>
+                      <select class="form-control" name="output_video" id="output_video" required>
+                        <option value="shared">Shared</option>
+                        <option value="not shared" selected>Not Shared</option>
+                      </select>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                      <label for="source_code" class="form-label">Source Code</label>
+                      <select class="form-control" name="source_code" id="source_code" required>
+                        <option value="shared">Shared</option>
+                        <option value="not shared" selected>Not Shared</option>
+                      </select>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                      <label for="complete_document" class="form-label">Document</label>
+                      <select class="form-control" name="complete_document" id="complete_document" required>
+                        <option value="shared">Shared</option>
+                        <option value="not shared" selected>Not Shared</option>
+                      </select>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                      <label for="explanation_file" class="form-label">Explanation</label>
+                      <select class="form-control" name="explanation_file" id="explanation_file" required>
+                        <option value="explained">Explained</option>
+                        <option value="not explained" selected>Not Explained</option>
+                      </select>
+                    </div>
+
+                    <!-- Row 8 -->
+                    <div class="col-md-6 mb-3">
+                      <label for="developer_name" class="form-label">Developer Name</label>
+                      <input type="text" class="form-control" name="developer_name" id="developer_name">
+                    </div>
+
+                    <!-- Row 9 -->
+                    <div class="col-md-6 mb-3">
+                      <label for="delivery_person_name" class="form-label">Delivery Person Name</label>
+                      <input type="text" class="form-control" name="delivery_person_name" id="delivery_person_name">
+                    </div>
+                    <!-- Row 10 -->
+                    <div class="col-md-12 mb-3">
+                      <label for="reason" class="form-label">Reason</label>
+                      <textarea class="form-control" name="reason" id="reason" rows="2"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+
+
+
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div class="container-fluid d-flex justify-content-between">
+          <nav class="pull-left">
+            <ul class="nav">
+              <li class="nav-item">
+                <a class="nav-link" href="http://www.themekita.com">
+
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"> </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"> </a>
+              </li>
+            </ul>
+          </nav>
+          <div class="copyright">
+            2025, Made with <i class="fa fa-heart heart text-danger"></i> by
+            <a href="https://digitalmarketing.dlktech.co.in/" target="_blank">DLK Groups</a>
+          </div>
+          <div>
+
+            <a target="_blank" href="https://themewagon.com/"></a>.
+          </div>
+        </div>
+      </footer>
+    </div>
+    <!-- End Custom template -->
+  </div>
+  <!--   Core JS Files   -->
+  <script src="{% static 'assets/js/core/jquery-3.7.1.min.js' %}"></script>
+  <script src="{% static 'assets/js/core/popper.min.js' %}"></script>
+  <script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
+
+  <!-- jQuery Scrollbar -->
+  <script src="{% static 'assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
+
+  <!-- Chart JS -->
+  <script src="{% static 'assets/js/plugin/chart.js/chart.min.js' %}"></script>
+
+  <!-- jQuery Sparkline -->
+  <script src="{% static 'assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js' %}"></script>
+
+  <!-- Chart Circle -->
+  <script src="{% static 'assets/js/plugin/chart-circle/circles.min.js' %}"></script>
+
+  <!-- Datatables -->
+  <script src="{% static 'assets/js/plugin/datatables/datatables.min.js' %}"></script>
+
+  <!-- jQuery Vector Maps -->
+  <script src="{% static 'assets/js/plugin/jsvectormap/jsvectormap.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugin/jsvectormap/world.js' %}"></script>
+
+  <!-- Sweet Alert -->
+  <script src="{% static 'assets/js/plugin/sweetalert/sweetalert.min.js' %}"></script>
+
+  <!-- Kaiadmin JS -->
+  <script src="{% static 'assets/js/kaiadmin.min.js' %}"></script>
+
+  <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+  <script src="{% static 'assets/js/setting-demo.js' %}"></script>
+  <script src="{% static 'assets/js/demo.js' %}"></script>
+
+  <script>
+    $(document).ready(function () {
+      // Clone header row for filters
+      $('#projectTable thead tr:eq(1) th').each(function (i) {
+        $(this).html('<input type="text" class="form-control form-control-sm" placeholder="Search" />');
+
+        $('input', this).on('keyup change', function () {
+          if ($('#projectTable').DataTable().column(i).search() !== this.value) {
+            $('#projectTable').DataTable()
+              .column(i)
+              .search(this.value)
+              .draw();
+          }
+        });
+      });
+
+      // Initialize DataTable
+      $('#projectTable').DataTable({
+        scrollX: true,
+        scrollCollapse: true,
+        paging: true,
+        fixedColumns: {
+          leftColumns: 2
+        }
+      });
+    });
+  </script>
+
+
+  <script>
+    $(document).ready(function () {
+      // Select/Deselect all
+      $('#select-all').on('click', function () {
+        $('.row-check').prop('checked', this.checked);
+      });
+
+      // Save button
+      $('.save-btn').on('click', function () {
+        const row = $(this).closest('tr');
+        const id = row.data('id');
+        const data = {};
+
+        row.find('.editable-checkbox').each(function () {
+          const field = $(this).data('field');
+          data[field] = $(this).is(':checked') ? 1 : 0;
+        });
+
+        $.ajax({
+          url: '/update-project/' + id + '/',
+          method: 'POST',
+          headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+          data: data,
+          success: function () {
+            alert('Updated successfully!');
+          }
+        });
+      });
+
+      // Delete button
+      $('.delete-btn').on('click', function () {
+        if (!confirm("Are you sure to delete this project?")) return;
+        const row = $(this).closest('tr');
+        const id = row.data('id');
+        $.ajax({
+          url: '/delete-project/' + id + '/',
+          method: 'POST',
+          headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+          success: function () {
+            row.remove();
+          }
+        });
+      });
+
+      // Individual row download
+      $('.download-btn').on('click', function () {
+        const row = $(this).closest('tr');
+        const cells = row.find('td').map(function () {
+          return $(this).text().trim();
+        }).get();
+
+        const ws = XLSX.utils.aoa_to_sheet([cells]);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Project");
+        XLSX.writeFile(wb, `Team_${cells[1]}.xlsx`);
+      });
+
+      // Download selected rows
+      $('#download-selected').on('click', function () {
+        const selected = [];
+        $('.row-check:checked').each(function () {
+          const row = $(this).closest('tr');
+          const cells = row.find('td').map(function () {
+            return $(this).text().trim();
+          }).get();
+          selected.push(cells);
+        });
+
+        if (selected.length === 0) return alert("Select at least one row.");
+
+        const ws = XLSX.utils.aoa_to_sheet(selected);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "SelectedProjects");
+        XLSX.writeFile(wb, "Selected_Projects.xlsx");
+      });
+    });
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const table = document.getElementById('projectTable');
+      const freezeCheckboxes = document.querySelectorAll('.freeze-col-checkbox');
+
+      function updateStickyColumns() {
+        const rows = table.querySelectorAll('tbody tr');
+        const theadRow = table.querySelector('thead tr');
+        const checkedCols = Array.from(freezeCheckboxes)
+          .filter(cb => cb.checked)
+          .map(cb => parseInt(cb.dataset.col));
+
+        checkedCols.sort((a, b) => a - b);
+
+        const leftOffsets = {};
+        let offset = 0;
+
+        // Calculate left offset based on column widths
+        checkedCols.forEach(col => {
+          const th = table.querySelector(`thead th[data-col='${col}']`);
+          if (th) {
+            leftOffsets[col] = offset;
+            offset += th.offsetWidth;
+          }
+        });
+
+        // Reset all th and td
+        const allCells = table.querySelectorAll('[data-col]');
+        allCells.forEach(cell => {
+          cell.classList.remove('sticky-col');
+          cell.style.left = '';
+        });
+
+        // Apply sticky style to header cells
+        checkedCols.forEach(col => {
+          const th = table.querySelector(`thead th[data-col='${col}']`);
+          if (th) {
+            th.classList.add('sticky-col');
+            th.style.left = `${leftOffsets[col]}px`;
+          }
+        });
+
+        // Apply sticky style to data cells
+        rows.forEach(row => {
+          checkedCols.forEach(col => {
+            const td = row.querySelector(`td[data-col='${col}']`);
+            if (td) {
+              td.classList.add('sticky-col');
+              td.style.left = `${leftOffsets[col]}px`;
+            }
+          });
+        });
+      }
+
+      freezeCheckboxes.forEach(cb => cb.addEventListener('change', updateStickyColumns));
+    });
+  </script>
+
+  <script>
+    // Get selected project rows
+    function getSelectedProjects() {
+      const selected = [];
+      $(".row-check:checked").each(function () {
+        let row = $(this).closest("tr");
+        selected.push(row);
+      });
+      return selected;
+    }
+
+    // Bulk Update Button
+    $('#bulk-update-btn').click(function () {
+      const selected = getSelectedProjects();
+      if (selected.length === 0) {
+        alert("Select at least one project to update.");
+        return;
+      }
+
+      const row = selected[0]; // Show first selected for editing
+
+      // Basic input fields
+      $('#projectId').val(row.data('id'));
+      $('#teamId').val(row.data('team_id'));
+      $('#deliveryDate').val(row.data('delivery_date'));
+      $('#name').val(row.data('name'));
+      $('#contact').val(row.data('contact'));
+      $('#whatsapp_no').val(row.data('whatsapp_no'));
+      $('#email').val(row.data('email'));
+      $('#college').val(row.data('college'));
+      $('#degree').val(row.data('degree'));
+      $('#department').val(row.data('department'));
+      $('#domain').val(row.data('domain'));
+      $('#topic').val(row.data('topic'));
+      $('#developer_name').val(row.data('developer_name'));
+      $('#delivery_person_name').val(row.data('delivery_person_name'));
+      $('#reason').val(row.data('reason'));
+
+      // Dropdowns - normalize value to match <option value="">
+      $('#project_status').val((row.data('project_status') || '').trim());
+
+      $('#workflow_abstract').val((row.data('workflow_abstract') || '').toLowerCase().trim());
+      $('#ppt_file').val((row.data('ppt_file') || '').toLowerCase().trim());
+      $('#output_video').val((row.data('output_video') || '').toLowerCase().trim());
+      $('#source_code').val((row.data('source_code') || '').toLowerCase().trim());
+      $('#complete_document').val((row.data('complete_document') || '').toLowerCase().trim());
+      $('#explanation_file').val((row.data('explanation_file') || '').toLowerCase().trim());
+
+      $('#updateModal').modal('show');
+    });
+
+    // Bulk Delete Button
+    $('#bulk-delete-btn').click(function () {
+      const selected = getSelectedProjects();
+      if (selected.length === 0) {
+        alert("Select at least one project to delete.");
+        return;
+      }
+
+      let ids = [];
+      selected.forEach(row => {
+        ids.push($(row).data("id"));
+      });
+
+      if (confirm(`Are you sure you want to delete ${ids.length} project(s)?`)) {
+        // Set first ID in modal
+        $('#deleteProjectId').val(ids[0]);
+        $('#deleteModal').modal('show');
+      }
+    });
+    setTimeout(function () {
+      const alert = document.getElementById("successMessage");
+      if (alert) {
+        alert.classList.remove("show");
+        alert.classList.add("hide");
+      }
+    }, 4000);
+  </script>
+
+</body>
+
+</html>

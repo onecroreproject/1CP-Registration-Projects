@@ -1,0 +1,532 @@
+{% extends "admin/internship/sales_base.html" %}
+
+{% block title %}Create Sales User{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+  th,
+  td {
+    white-space: nowrap;
+  }
+
+  th.freeze {
+    background-color: #d1ecf1 !important;
+  }
+</style>
+
+<style>
+  table th,
+  table td {
+    vertical-align: middle !important;
+    font-size: 12px;
+    padding: 8px;
+    white-space: nowrap;
+  }
+
+  table.table-bordered td,
+  table.table-bordered th {
+    border: 1px solid #dee2e6 !important;
+    vertical-align: middle !important;
+  }
+
+  .multiline-cell div {
+    border-bottom: 1px solid #dee2e6;
+    padding: 1px 2px;
+  }
+
+  .multiline-cell div:last-child {
+    border-bottom: none;
+  }
+
+  .editable {
+    cursor: text;
+  }
+
+  .editable:hover {
+    background-color: bisque;
+    padding: 10px;
+    border-radius: 3px;
+  }
+
+  .sticky-col {
+    position: sticky;
+    background: white;
+    z-index: 2;
+  }
+
+  thead .sticky-col {
+    top: 0;
+    z-index: 3;
+  }
+
+  table th,
+  table td {
+    white-space: nowrap;
+  }
+</style>
+
+<div class="page-header ms-5" style="margin-top: 60px;">
+  <div class="row">
+    <div class="col-sm-12 mt-5">
+      <h3 class="page claw-title mt-3">Project</h3>
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_internship:sales_dashboard' %}">Sales Dashboard</a></li>
+        <li class="breadcrumb-item">Payment</li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_internship:sales_payment' %}">Payment Update</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_internship:payment_history' %}">Payment History</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="page-inner">
+    <div class="row">
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-primary bubble-shadow-small">
+                  <i class="fas fa-users"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Total Registrations</p>
+                  <h4 class="card-title">{{ total_ids }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-info bubble-shadow-small">
+                  <i class="fas fa-user-check"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Today Registrations</p>
+                  <h4 class="card-title">{{ daily_ids }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-primary bubble-shadow-small">
+                  <i class="fas fa-users"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Total Delivery</p>
+                  <h4 class="card-title">{{ total_delivery }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-info bubble-shadow-small">
+                  <i class="fas fa-user-check"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Today Delivery</p>
+                  <h4 class="card-title">{{ daily_delivery }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show text-center mx-auto" role="alert" style="width: 50%;"
+      id="successMessage">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-round">
+          <div class="card-header">
+            <div class="card-head-row card-tools-still-right">
+              <h4 class="card-title">Payment overviews</h4>
+            </div>
+          </div>
+          <div class="mt-3 d-flex justify-content-end gap-2">
+            <button class="btn btn-warning" id="download-selected">Download Selected</button>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table id="projectTable" class="table table-bordered w-100 text-center align-middle mb-0">
+                    <thead class="thead-light">
+                      <tr>
+                        <th data-col="0" style="text-transform: none;">
+                          <div style="white-space: nowrap;">
+                            <label>
+                              <input type="checkbox" id="select-all"> Select
+                            </label><br>
+                            <label>
+                              <input type="checkbox" class="freeze-col-checkbox" data-col="0"> Freeze
+                            </label>
+                          </div>
+                        </th>
+                        <th data-col="1" style="text-transform: none;"><input type="checkbox"
+                            class="freeze-col-checkbox" data-col="1"> Bill No</th>
+                        <th data-col="2" style="text-transform: none;"><input type="checkbox"
+                            class="freeze-col-checkbox" data-col="2"> Team ID</th>
+                        <th data-col="3" style="text-transform: none;"><input type="checkbox"
+                            class="freeze-col-checkbox" data-col="3"> Date</th>
+                        <th data-col="4" style="text-transform: none;"><input type="checkbox"
+                            class="freeze-col-checkbox" data-col="4"> Student Name</th>
+                        <th data-col="5" style="text-transform: none;"><input type="checkbox"
+                            class="freeze-col-checkbox" data-col="5"> Domain</th>
+                        <th data-col="6" style="text-transform: none;"><input type="checkbox"
+                            class="freeze-col-checkbox" data-col="6"> Payment Mode</th>
+                        <th data-col="7" style="text-transform: none;"><input type="checkbox"
+                            class="freeze-col-checkbox" data-col="7"> Payment Type</th>
+                        <th data-col="8" style="text-transform: none;"><input type="checkbox"
+                            class="freeze-col-checkbox" data-col="8"> Payment ID</th>
+                        <th data-col="9" style="text-transform: none;"><input type="checkbox"
+                            class="freeze-col-checkbox" data-col="9"> Invoice Number</th>
+                        <th data-col="10" style="text-transform: none;"><input type="checkbox"
+                            class="freeze-col-checkbox" data-col="10"> Amount</th>
+                        <th data-col="11" style="text-transform: none;"><input type="checkbox"
+                            class="freeze-col-checkbox" data-col="11"> Status</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for payment in transactions %}
+                      <tr>
+                        <td data-col="0"><input type="checkbox" class="row-check"></td>
+                        <td data-col="1">{{ payment.bill_no|default:"-" }}</td>
+                        <td data-col="2">{{ payment.registration.team_id|default:"-" }}</td>
+                        <td data-col="3">
+                          <div data-field="created_date">{{ payment.created_at|date:"M d, Y" }}</div>
+                        </td>
+                        <td data-col="4">
+                          <div data-field="student_name">
+                            {% if payment.registration.ordered_students %}
+                            {{ payment.registration.ordered_students.0.student_name }}
+                            {% else %}
+                            N/A
+                            {% endif %}
+                          </div>
+                        </td>
+                        <td data-col="5">
+                          <div data-field="domain">{{ payment.registration.domain }}</div>
+                        </td>
+                        <td data-col="6">
+                          {% if payment.selected_payment_method %}
+                              {% if payment.selected_payment_method == "cash" %}
+                                  <span class="badge badge-warning">Cash</span>
+                              {% elif payment.selected_payment_method == "online" %}
+                                  <span class="badge badge-success">Online</span>
+                              {% else %}
+                                  {{ payment.selected_payment_method|title }}
+                              {% endif %}
+                          {% else %}
+                              <span class="badge badge-secondary">N/A</span>
+                          {% endif %}
+                        </td>
+                        <td data-col="7">
+                          <div data-field="payment_option">
+                            {% if payment.selected_payment_option == "Registration" %}
+                            <span class="badge badge-info">Registration</span>
+                            {% elif payment.selected_payment_option == "Advance" %}
+                            <span class="badge badge-warning">Advance</span>
+                            {% elif payment.selected_payment_option == "Full" %}
+                            <span class="badge badge-success">Full</span>
+                            {% else %}
+                            <span class="badge badge-secondary">N/A</span>
+                            {% endif %}
+                          </div>
+                        </td>
+                        <td data-col="8">
+                          <div data-field="cashfree_order_id">{{ payment.cashfree_order_id|default:"N/A" }}</div>
+                        </td>
+                        <td data-col="9">
+                          <div data-field="invoice_number">{{ payment.registration.invoice_number|default:"N/A" }}</div>
+                        </td>
+                        <td data-col="10">
+                          <div data-field="amount">₹{{ payment.amount|floatformat:2 }}</div>
+                        </td>
+                        <td data-col="11">
+                          <div data-field="status">
+                            {% if payment.paid %}
+                            <span class="badge badge-success">Success</span>
+                            {% else %}
+                            <span class="badge badge-danger">Failed</span>
+                            {% endif %}
+                          </div>
+                        </td>
+                      </tr>
+                      {% empty %}
+                      <tr>
+                        <td colspan="25" class="text-center">No transactions available.</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    // Clone header row for filters
+    $('#projectTable thead tr:eq(1) th').each(function (i) {
+      $(this).html('<input type="text" class="form-control form-control-sm" placeholder="Search" />');
+
+      $('input', this).on('keyup change', function () {
+        if ($('#projectTable').DataTable().column(i).search() !== this.value) {
+          $('#projectTable').DataTable()
+            .column(i)
+            .search(this.value)
+            .draw();
+        }
+      });
+    });
+
+    // Initialize DataTable
+    $('#projectTable').DataTable({
+      scrollX: true,
+      scrollCollapse: true,
+      paging: true,
+      fixedColumns: {
+        leftColumns: 2
+      }
+    });
+  });
+</script>
+
+
+<script>
+  $(document).ready(function () {
+    // Select/Deselect all
+    $('#select-all').on('click', function () {
+      $('.row-check').prop('checked', this.checked);
+    });
+
+    // Save button
+    $('.save-btn').on('click', function () {
+      const row = $(this).closest('tr');
+      const id = row.data('id');
+      const data = {};
+
+      row.find('.editable-checkbox').each(function () {
+        const field = $(this).data('field');
+        data[field] = $(this).is(':checked') ? 1 : 0;
+      });
+
+      $.ajax({
+        url: '/update-project/' + id + '/',
+        method: 'POST',
+        headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+        data: data,
+        success: function () {
+          alert('Updated successfully!');
+        }
+      });
+    });
+
+    // Delete button
+    $('.delete-btn').on('click', function () {
+      if (!confirm("Are you sure to delete this project?")) return;
+      const row = $(this).closest('tr');
+      const id = row.data('id');
+      $.ajax({
+        url: '/delete-project/' + id + '/',
+        method: 'POST',
+        headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+        success: function () {
+          row.remove();
+        }
+      });
+    });
+
+    // Individual row download
+    $('.download-btn').on('click', function () {
+      const row = $(this).closest('tr');
+      const cells = row.find('td').map(function () {
+        return $(this).text().trim();
+      }).get();
+
+      const ws = XLSX.utils.aoa_to_sheet([cells]);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Project");
+      XLSX.writeFile(wb, `Team_${cells[1]}.xlsx`);
+    });
+
+    // Download selected rows
+    $('#download-selected').on('click', function () {
+      const selected = [];
+      $('.row-check:checked').each(function () {
+        const row = $(this).closest('tr');
+        const cells = row.find('td').map(function () {
+          return $(this).text().trim();
+        }).get();
+        selected.push(cells);
+      });
+
+      if (selected.length === 0) return alert("Select at least one row.");
+
+      const ws = XLSX.utils.aoa_to_sheet(selected);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "SelectedProjects");
+      XLSX.writeFile(wb, "Selected_Projects.xlsx");
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const table = document.getElementById('projectTable');
+    const freezeCheckboxes = document.querySelectorAll('.freeze-col-checkbox');
+
+    function updateStickyColumns() {
+      const rows = table.querySelectorAll('tbody tr');
+      const theadRow = table.querySelector('thead tr');
+      const checkedCols = Array.from(freezeCheckboxes)
+        .filter(cb => cb.checked)
+        .map(cb => parseInt(cb.dataset.col));
+
+      checkedCols.sort((a, b) => a - b);
+
+      const leftOffsets = {};
+      let offset = 0;
+
+      // Calculate left offset based on column widths
+      checkedCols.forEach(col => {
+        const th = table.querySelector(`thead th[data-col='${col}']`);
+        if (th) {
+          leftOffsets[col] = offset;
+          offset += th.offsetWidth;
+        }
+      });
+
+      // Reset all th and td
+      const allCells = table.querySelectorAll('[data-col]');
+      allCells.forEach(cell => {
+        cell.classList.remove('sticky-col');
+        cell.style.left = '';
+      });
+
+      // Apply sticky style to header cells
+      checkedCols.forEach(col => {
+        const th = table.querySelector(`thead th[data-col='${col}']`);
+        if (th) {
+          th.classList.add('sticky-col');
+          th.style.left = `${leftOffsets[col]}px`;
+        }
+      });
+
+      // Apply sticky style to data cells
+      rows.forEach(row => {
+        checkedCols.forEach(col => {
+          const td = row.querySelector(`td[data-col='${col}']`);
+          if (td) {
+            td.classList.add('sticky-col');
+            td.style.left = `${leftOffsets[col]}px`;
+          }
+        });
+      });
+    }
+
+    freezeCheckboxes.forEach(cb => cb.addEventListener('change', updateStickyColumns));
+  });
+</script>
+
+<script>
+  function getSelectedProjects() {
+    const selected = [];
+    $('.row-check:checked').each(function () {
+      selected.push($(this).closest('tr'));
+    });
+    return selected;
+  }
+
+  //  Auto-dismiss success message
+  setTimeout(function () {
+    const alert = document.getElementById("successMessage");
+    if (alert) {
+      alert.classList.remove("show");
+      alert.classList.add("hide");
+    }
+  }, 4000);
+</script>
+
+
+
+<!-- JS to Remember Last Open Menu -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggleLinks = document.querySelectorAll('[data-bs-toggle="collapse"]');
+
+    // Restore last opened
+    const lastOpen = localStorage.getItem("sidebarActive");
+    if (lastOpen) {
+      const collapseDiv = document.querySelector(lastOpen);
+      const toggleBtn = document.querySelector(`[href="${lastOpen}"]`);
+      if (collapseDiv && toggleBtn) {
+        collapseDiv.classList.add("show");
+        toggleBtn.setAttribute("aria-expanded", "true");
+      }
+    }
+
+    // Save open/close state
+    toggleLinks.forEach(link => {
+      link.addEventListener("click", function () {
+        const targetId = this.getAttribute("href");
+        const targetMenu = document.querySelector(targetId);
+        const isOpen = targetMenu.classList.contains("show");
+
+        if (isOpen) {
+          localStorage.removeItem("sidebarActive");
+        } else {
+          localStorage.setItem("sidebarActive", targetId);
+        }
+      });
+    });
+  });
+</script>
+
+
+{% endblock %}

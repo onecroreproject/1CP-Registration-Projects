@@ -1,0 +1,88 @@
+{% extends "admin/project/admin_base.html" %}
+
+{% block title %}Create Sales User{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="page-header ms-5" style="margin-top: 60px;">
+  <div class="row">
+    <div class="col-sm-12 mt-5">
+      <h3 class="page claw-title mt-3">Project</h3>
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_project:main_dashboard' %}">Admin Dashboard</a></li>
+        <li class="breadcrumb-item">Domain</li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_project:create_domain' %}">Create Domain</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="page-inner">
+    <div class="container py-5">
+      <div class="row">
+        <!-- Add Domain Form -->
+        <div class="col-sm-6 col-md-4">
+          <div class="domain-section">
+            <div class="domain-header">
+              <i class="fas fa-plus-circle me-2"></i> Add New Domain
+            </div>
+            <div class="domain-body">
+              <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="id_name" class="form-label">Domain Name</label>
+                  {{ form.name }}
+                </div>
+                <button type="submit" name="add_domain" class="btn btn-primary w-100 btn-custom">
+                  Add Domain
+                </button>
+              </form>
+
+              {% if form.errors %}
+              <div class="alert alert-danger mt-3">
+                <ul class="mb-0">
+                  {% for field in form %}
+                  {% for error in field.errors %}
+                  <li>{{ error }}</li>
+                  {% endfor %}
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Existing Domains -->
+        <div class="col-sm-6 col-md-4">
+          <div class="domain-section">
+            <div class="domain-header">
+              <i class="fas fa-list me-2"></i> Existing Domains
+            </div>
+            <div class="domain-body">
+              {% if domains %}
+              <ul class="list-group table-list">
+                {% for domain in domains %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  {{ domain.name }}
+                  <span class="badge badge-number rounded-pill">#{{ forloop.counter }}</span>
+                </li>
+                {% endfor %}
+              </ul>
+              {% else %}
+              <div class="alert alert-warning text-center mb-0">
+                <i class="fas fa-exclamation-circle me-1"></i> No domains added yet.
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

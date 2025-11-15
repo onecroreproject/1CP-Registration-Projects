@@ -1,0 +1,103 @@
+{% extends "admin/project/admin_base.html" %}
+
+{% block title %}Create Sales User{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="page-header ms-5" style="margin-top: 60px;">
+  <div class="row">
+    <div class="col-sm-12 mt-5">
+      <h3 class="page claw-title mt-3">Project</h3>
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin_project:main_dashboard' %}">Admin Dashboard</a></li>
+        <li class="breadcrumb-item">Payment</li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_project:create_sales' %}">Create Sales Account</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="space" style="margin-top: 100px;"></div>
+
+<body data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" data-pc-theme="light">
+
+  {% if messages %}
+  <div id="message-container">
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert"
+      style="transition: opacity 0.5s ease;">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    setTimeout(function () {
+      const alerts = document.querySelectorAll('.alert');
+      alerts.forEach(function (alert) {
+        alert.classList.remove('show');
+        alert.classList.add('fade');
+        setTimeout(() => {
+          alert.remove();
+        }, 500); // Remove element after fade transition
+      });
+    }, 4000);  // 4 seconds
+  </script>
+  {% endif %}
+
+  <!-- Signup Form -->
+  <div class="auth-main">
+    <div class="auth-wrapper v1">
+      <div class="auth-form">
+        <div class="position-relative my-5">
+          <div class="auth-bg">
+            <span class="r"></span>
+            <span class="r s"></span>
+            <span class="r s"></span>
+            <span class="r"></span>
+          </div>
+          <div class="card mb-0">
+            <div class="card-body p-4">
+              <h2 class="text-center mb-4">Create sales Account</h2>
+              <form method="post">
+                {% csrf_token %}
+
+                <div class="mb-3 position-relative">
+                  <i class="bi bi-person-fill form-icon"></i>
+                  <input type="text" name="username" id="id_username" class="form-control" placeholder="Username"
+                    required>
+                </div>
+
+                <div class="mb-3 position-relative">
+                  <i class="bi bi-envelope-fill form-icon"></i>
+                  <input type="email" name="email" id="id_email" class="form-control" placeholder="Email" required>
+                </div>
+
+                <div class="mb-3 position-relative">
+                  <i class="bi bi-lock-fill form-icon"></i>
+                  <input type="password" name="password1" id="id_password1" class="form-control" placeholder="Password"
+                    required>
+                </div>
+
+                <div class="mb-4 position-relative">
+                  <i class="bi bi-lock-fill form-icon"></i>
+                  <input type="password" name="password2" id="id_password2" class="form-control"
+                    placeholder="Confirm Password" required>
+                </div>
+
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary">Sign Up</button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}

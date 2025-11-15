@@ -1,0 +1,127 @@
+/* General and background styling */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+  height: 100%;
+  background: url('https://media.giphy.com/media/3o7qE1YN7aBOFPRw8E/giphy.gif') no-repeat center center fixed;
+  background-size: auto;
+}
+
+/* Centered container */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Login card */
+.login-card {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  width: 370px;
+  text-align: center;
+  animation: slideUp 0.8s ease-in-out;
+}
+
+.login-card h2 {
+  margin-bottom: 25px;
+  color: #003f5c;
+  font-size: 28px;
+}
+
+/* Form fields */
+.form-group {
+  text-align: left;
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #444;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #6658ea;
+  outline: none;
+  box-shadow: 0 0 5px rgba(102, 88, 234, 0.6);
+}
+
+/* Remember me and forgot link */
+.form-row.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+.form-row a {
+  color: #6e8efb;
+  text-decoration: none;
+}
+
+.form-row a:hover {
+  text-decoration: underline;
+}
+
+/* Buttons */
+button.btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+button.btn:hover {
+  transform: scale(1.05);
+}
+
+.create-account {
+  margin-top: 20px;
+}
+
+.create-account p {
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.btn.secondary {
+  background: none;
+  color: #6e8efb;
+  border: none;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.btn.secondary:hover {
+  text-decoration: none;
+  border-bottom: 2px solid #6e8efb;
+}
+
+/* Slide animation */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}

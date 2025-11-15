@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>1Crore - Projects</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-green-energy-renewable-energy-flaticons-flat-flat-icons.png"
+        type="image/x-icon">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+            color: #000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin-top: 50px;
+        }
+
+        .document-box {
+            background-color: #fff;
+            padding: 40px;
+            border: 1px solid #dee2e6;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+            margin-right: auto;
+            margin-left: auto;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        h1 {
+            font-weight: 600;
+            text-align: center;
+            color: #fff;
+            background-color: #28a745;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        h2 {
+            font-size: 30px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        button,
+        .btn-user {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            max-width: 200px;
+            cursor: pointer;
+            margin: 10px auto;
+            display: block;
+            text-align: center;
+        }
+
+        button:hover,
+        .btn-user:hover {
+            background-color: #218838;
+            color: #fff;
+        }
+
+        .timeline {
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 0;
+        }
+
+        .timeline li {
+            text-align: center;
+            flex: 1;
+        }
+
+        .timeline-step {
+            width: 20px;
+            height: 20px;
+            margin: 0 auto 5px;
+            border-radius: 50%;
+            background: gray;
+        }
+
+        .active .timeline-step {
+            background: blue;
+        }
+
+        .completed .timeline-step {
+            background: green;
+        }
+
+        .disabled a {
+            pointer-events: none;
+            color: #aaa;
+        }
+
+        .disabled .timeline-step {
+            background: #ccc;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .left,
+        .center,
+        .right {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        .btn-user {
+            border: 1px solid #28a745;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .student-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .student-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+            color: white;
+        }
+
+        @media (max-width: 576px) {
+
+            body,
+            h1,
+            h2,
+            h3,
+            p,
+            label,
+            .btn,
+            .form-control,
+            .timeline li span {
+                font-size: 90% !important;
+            }
+
+            h1 {
+                font-size: 18px !important;
+            }
+
+            h2 {
+                font-size: 16px !important;
+            }
+
+            .btn {
+                font-size: 14px !important;
+                padding: 8px 16px !important;
+            }
+
+            .document-box {
+                padding: 20px !important;
+            }
+
+            .timeline-step {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body onload="displayCurrentTime()">
+
+    <h1>Project Registration Form</h1><br>
+
+    <div class="container">
+
+        <!-- Timeline -->
+        <ul class="timeline">
+            <!-- <li id="step-terms" class="completed">
+                <a href="#" onclick="completeStep('terms')">
+                    <div class="timeline-step"></div>
+                    <span>Terms</span>
+                </a>
+            </li> -->
+            <li id="step-register" class="active">
+                <a href="#" onclick="completeStep('register')">
+                    <div class="timeline-step"></div>
+                    <span>Register</span>
+                </a>
+            </li>
+            <li id="step-payment" class="disabled">
+                <a href="#" onclick="completeStep('payment')">
+                    <div class="timeline-step"></div>
+                    <span>Payment</span>
+                </a>
+            </li>
+            <li id="step-success" class="disabled">
+                <a href="#" onclick="completeStep('success')">
+                    <div class="timeline-step"></div>
+                    <span>Success</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Form -->
+        <div class="document-box">
+            <h1>Users</h1><br>
+
+            <div class="button-container">
+                <h2>Welcome! Please select an option</h2>
+                <div class="d-flex flex-row justify-content-center align-items-center gap-3">
+                    <a href="{% url 'project:terms' %}" class="btn px-4">New User</a>
+                    <a href="{% url 'project:terms_exist' %}" class="btn px-4">Existing User</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Save current URL before redirecting
+            window.addEventListener('offline', function () {
+                if (window.location.pathname !== "/offline/") {
+                    localStorage.setItem('lastPage', window.location.href);
+                    window.location.href = "/offline/";
+                }
+            });
+
+            // Reload only if not already on the offline page
+            window.addEventListener('online', function () {
+                if (window.location.pathname === "/offline/") {
+                    const lastPage = localStorage.getItem('lastPage');
+                    if (lastPage) {
+                        window.location.href = lastPage;
+                    }
+                } else {
+                    location.reload();
+                }
+            });
+
+            // Poll as fallback
+            setInterval(function () {
+                if (navigator.onLine && window.location.pathname === "/offline/") {
+                    const lastPage = localStorage.getItem('lastPage');
+                    if (lastPage) {
+                        window.location.href = lastPage;
+                    }
+                }
+            }, 5000);
+        });
+    </script>
+
+</body>
+
+</html>

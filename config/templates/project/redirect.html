@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Payment Status</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .pending {
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .cancelled {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .details {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Payment Status</h1>
+        {% if status == "SUCCESS" %}
+        <p class="success">{{ message }}</p>
+        <p class="success">{{ short_message }}</p>
+        {% elif status == "PENDING" %}
+        <p class="pending">{{ message }}</p>
+        <p class="pending">{{ short_message }}</p>
+        {% elif status == "CANCELLED" %}
+        <p class="cancelled">{{ message }}</p>
+        <p class="cancelled">{{ short_message }}</p>
+        {% elif status == "ERROR" %}
+        <p class="error">{{ message }}</p>
+        <p class="error">Error: {{ error }}</p>
+        {% else %}
+        <p class="error">{{ message }}</p>
+        <p class="error">{{ short_message }}</p>
+        {% endif %}
+        <div class="details">
+            <p>Bill Number: {{ bill_no }}</p>
+            <p>Name: {{ name }}</p>
+            <p>Email: {{ email }}</p>
+            <p>Phone: {{ phone }}</p>
+            <p>Payment ID: {{ payment_id }}</p>
+            <p>Transaction ID: {{ transactionId }}</p>
+            <p>Amount: ₹{{ amount|floatformat:2 }}</p>
+            <p>State: {{ state }}</p>
+            <p>Payment Status: {{ paymentStatus|default:"N/A" }}</p>
+            <p>Payment Type: {{ paymentInstrument.type }}</p>
+            <p>PG Transaction ID: {{ paymentInstrument.pgTransactionId }}</p>
+            <p>Card Type: {{ paymentInstrument.cardType }}</p>
+            <p>UTR: {{ paymentInstrument.utr }}</p>
+            <p>Message: {{ message }}</p>
+            <p>Code: {{ code }}</p>
+        </div>
+        <a href="{% url 'home' %}">Back to Home</a>
+    </div>
+</body>
+
+</html>

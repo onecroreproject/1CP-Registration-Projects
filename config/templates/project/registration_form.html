@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>1Crore - Projects</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-green-energy-renewable-energy-flaticons-flat-flat-icons.png" type="image/x-icon">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+            color: #000;
+        }
+
+        h1 {
+            font-weight: 600;
+            text-align: center;
+            color: #fff;
+            background-color: #28a745;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        h5 {
+            font-size: 14px;
+            color: #555;
+            text-align: center;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            width: 400px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            width: 20%;
+            cursor: pointer;
+            margin-left: 440px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .timeline {
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 0;
+        }
+
+        .timeline li {
+            text-align: center;
+            flex: 1;
+        }
+
+        .timeline-step {
+            width: 20px;
+            height: 20px;
+            margin: 0 auto 5px;
+            border-radius: 50%;
+            background: gray;
+        }
+
+        .active .timeline-step {
+            background: blue;
+        }
+
+        .completed .timeline-step {
+            background: green;
+        }
+
+        .disabled a {
+            pointer-events: none;
+            color: #aaa;
+        }
+
+        .disabled .timeline-step {
+            background: #ccc;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .left{
+            display: flex;
+            padding: auto;
+        }
+        .center{
+            display: flex;
+            padding: auto;
+        }
+        .right{
+            display: flex;
+            padding: auto;
+        }
+        body { 
+            background-color: #f8f9fa; 
+            font-family: 'Poppins', sans-serif; 
+        }
+        .document-box {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            box-sizing: border-box;
+        }
+        h1 { 
+            font-weight: 600; 
+            text-align: center; 
+            color: #fff; 
+            background-color: #28a745; 
+            padding: 10px; 
+            border-radius: 8px; 
+            margin-bottom: 30px; }
+        .form-section { 
+            display: none; 
+        }
+        .form-section.active { 
+            display: block; 
+        }
+        .form-control { 
+            border-radius: 5px; 
+            width: 220px; }
+        .btn { width: 30%; 
+            margin: 10px auto; 
+            display: block; 
+        }
+
+        .student-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .student-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .form-inline-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .small-width {
+            width: 300px;
+        }
+        button.btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 200px;
+            margin: 20px auto;
+            display: block;
+        }
+
+        button.btn:hover {
+            background-color: #218838;
+        }
+
+    </style>
+</head>
+<body onload="displayCurrentTime()">
+
+     <h1>Project Registration Form</h1><br>
+
+<div class="container">
+
+       <!-- Timeline -->
+<ul class="timeline">
+    <li id="step-terms" class="completed">
+        <a href="#" onclick="completeStep('terms')">
+            <div class="timeline-step"></div>
+            <span>Terms</span>
+        </a>
+    </li>
+    <li id="step-register" class="active">
+        <a href="#" onclick="completeStep('register')">
+            <div class="timeline-step"></div>
+            <span>Register</span>
+        </a>
+    </li>
+    <li id="step-payment" class="disabled">
+        <a href="#" onclick="completeStep('payment')">
+            <div class="timeline-step"></div>
+            <span>Payment</span>
+        </a>
+    </li>
+    <li id="step-success" class="disabled">
+        <a href="#" onclick="completeStep('success')">
+            <div class="timeline-step"></div>
+            <span>Success</span>
+        </a>
+    </li>
+</ul>
+
+    <!-- Form -->
+    <div class="document-box">
+        <h1>Register</h1><br>
+
+        <div class="form-section active">
+        <h4>Student Details</h4><br>
+        <p><strong>Current Time:</strong> <span id="current_time"></span></p><br>
+
+        <form method="POST">
+            {% csrf_token %}
+
+
+            <div class="row">
+            
+            <div class="form-group col-12 col-md-6 col-lg-4">
+                <label for="num_members">No of Team Members</label>
+                <select id="num_members" name="num_members" class="form-control" onchange="showStudentDetails()" required>
+                    <option value="">Select Number of Members</option>
+                    {% for i in member_range %}
+                    <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select><br>
+            </div><br>
+
+            
+
+            <div class="form-group col-12 col-md-6 col-lg-4">
+                <label for="college_name">College Name</label>
+                <input type="text" id="college_name" name="college_name" class="form-control" placeholder="Enter College Name" required>
+            </div><br>
+
+            <div class="form-group col-12 col-md-6 col-lg-4">
+                <label for="degree">Degree</label>
+                <input type="text" id="degree" name="degree" class="form-control" placeholder="Enter Degree" required>
+            </div><br>
+
+            <div class="form-group col-12 col-md-6 col-lg-4">
+                <label for="degree">Department</label>
+                <input type="text" id="department" name="department" class="form-control" placeholder="Enter Department" required>
+            </div><br>
+            
+            </div><br>
+             <div id="student_section" class="student-grid"></div>
+            <div class="d-flex justify-content-end mt-3">
+                <button type="button" class="btn" onclick="nextSection()">Next</button>
+            </div>
+            </div>
+
+           
+
+            
+
+            <div class="form-section">
+                <h4>Project Details</h4><br>
+                <div class="container">
+                    <div class="row">
+                <div class="form-group col-md-4">
+                <label for="domain">Domain</label>
+                <select id="domain" name="domain" class="form-control" required>
+                    <option value="" disabled selected>Select Domain</option>
+                    {% for domain in domains %}
+                    <option value="{{ domain.name }}">{{ domain.name }}</option>
+                    {% endfor %}
+                </select>
+                </div><br>
+
+                    
+
+                    <div class="form-group col-md-4">
+                        <label for="topic">Topic (Optional)</label>
+                        <input type="text" id="topic" name="topic" class="form-control" placeholder="Enter Topic" >
+                    </div><br>
+
+                    <div class="form-group col-md-4">
+                        <label for="reference_details">Reference Details (Optional)</label>
+                        <input type="text" id="reference_details" name="reference_details" class="form-control" placeholder="Eg: 1CP24/0001">
+                    </div><br>
+                </div><br><br>
+                <div class="d-flex justify-content-between mt-4">
+                    <button type="button" class="btn btn-success" style="width: 100px;" onclick="prevSection()">Previous</button>
+                    <button type="button" class="btn btn-success" style="width: 100px;" onclick="nextSection()">Next</button>
+                </div>
+                </div>
+            </div>
+
+
+           
+
+            <div class="form-section">
+                <h4>Payment Details</h4><br>
+
+                <!-- Direct Payment Option Input -->
+                <div class="form-group small-width">
+                    <label for="payment_option">Payment Option - Registration</label>
+                    <input type="hidden" id="payment_option" name="payment_option" class="form-control" value="Registration" readonly>
+                </div><br>
+
+                <!-- Paid Amount Field -->
+                <div id="payment_fields">
+                    <div class="form-inline-group justify-content-center">
+                        <!-- Paid Amount -->
+                        <div class="form-group" id="paid_amount_group">
+                            <label for="paid_amount">Amount</label>
+                            <input type="number" id="paid_amount" name="paid_amount" class="form-control" placeholder="Enter Amount" required>
+                        </div>
+                    </div><br>
+                </div>
+
+                <input type="hidden" name="total_amount" value="0.00">
+                <input type="hidden" name="balance_amount" value="0.00">
+
+                <!-- Info and Buttons -->
+                <h4 style="color:#28a745">Please review your details carefully before clicking submit. Once submitted, changes cannot be made.</h4><br>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <button type="button" class="btn btn-success" style="width: 100px;" onclick="prevSection()">Previous</button>
+                    <button type="submit" class="btn btn-success" style="width: 100px;">Submit</button>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script>
+    function displayCurrentTime() {
+        const now = new Date();
+        const options = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        };
+        document.getElementById('current_time').textContent = now.toLocaleString('en-US', options);
+        setTimeout(displayCurrentTime, 1000);
+    }
+
+    function calculateBalance() {
+        const total = parseFloat(document.getElementById('total_amount').value) || 0;
+        const paid = parseFloat(document.getElementById('paid_amount').value) || 0;
+
+        // Ensure balance is never negative
+        const balance = Math.max(total - paid, 0);
+
+        document.getElementById('balance_amount_display').value = balance.toFixed(2);
+        document.getElementById('balance_amount').value = balance.toFixed(2);
+    }
+
+function showStudentDetails() {
+    const num = parseInt(document.getElementById('num_members').value);
+    const section = document.getElementById('student_section');
+    section.innerHTML = '';
+
+    for (let i = 1; i <= num; i++) {
+        const studentRow = document.createElement('div');
+        studentRow.classList.add('student-row');
+
+        studentRow.innerHTML = `
+            <div style="margin-bottom: 10px;">
+                <h5 style="
+                    font-size: 18px;
+                    font-weight: bold;
+                    color: #2c3e50;
+                    padding-bottom: 5px;
+                    margin: 0;
+                ">
+                    Student ${i} Details
+                </h5>
+            </div>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <div class="form-group" style="flex: 1;">
+                    <label for="student_name_${i}">Name</label>
+                    <input type="text" id="student_name_${i}" name="student_name_${i}" class="form-control" required>
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label for="student_contact_${i}">Contact</label>
+                    <input type="tel" id="student_contact_${i}" name="student_contact_${i}" class="form-control" required 
+                        maxlength="10" 
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
+                    <div class="invalid-feedback">Please enter a valid 10-digit contact number.</div>
+                </div>
+
+                <div class="form-group" style="flex: 1;">
+                    <label for="student_whatsapp_${i}">WhatsApp Number</label>
+                    <input type="tel" id="student_whatsapp_${i}" name="student_whatsapp_${i}" class="form-control" required 
+                        maxlength="10"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
+                    <div class="invalid-feedback">Please enter a valid 10-digit WhatsApp number.</div>
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label for="student_email_${i}">Email</label>
+                    <input type="email" id="student_email_${i}" name="student_email_${i}" class="form-control" required>
+                </div>
+            </div>
+        `;
+
+        section.appendChild(studentRow);
+    }
+}
+</script>
+
+<script>
+    let currentSection = 0;
+
+    function showSection(index) {
+        const sections = document.querySelectorAll('.form-section');
+        sections.forEach((section, i) => section.classList.toggle('active', i === index));
+        currentSection = index;
+    }
+
+    function validateSection() {
+        const sections = document.querySelectorAll('.form-section');
+        const inputs = sections[currentSection].querySelectorAll("input, select");
+        let isValid = true;
+
+        inputs.forEach(input => {
+            const feedback = input.nextElementSibling;
+            const isContactField = input.id.includes("student_contact_") || input.id.includes("student_whatsapp_");
+
+            // Reset styles
+            input.classList.remove('is-invalid');
+            if (feedback) feedback.style.display = "none";
+
+            // General required field check
+            if (input.hasAttribute("required") && !input.value.trim()) {
+                isValid = false;
+                input.classList.add('is-invalid');
+                if (feedback) feedback.style.display = "block";
+            }
+
+            // Specific 10-digit number validation
+            if (isContactField) {
+                const isTenDigit = /^[0-9]{10}$/.test(input.value.trim());
+                if (!isTenDigit) {
+                    isValid = false;
+                    input.classList.add('is-invalid');
+                    if (feedback) feedback.style.display = "block";
+                }
+            }
+        });
+
+        if (!isValid) {
+            alert("Please correct the highlighted fields before proceeding.");
+        }
+
+        return isValid;
+    }
+
+    function nextSection() {
+        if (validateSection()) {
+            const sections = document.querySelectorAll('.form-section');
+            if (currentSection < sections.length - 1) {
+                showSection(currentSection + 1);
+            }
+        }
+    }
+
+    function prevSection() {
+        if (currentSection > 0) {
+            showSection(currentSection - 1);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => showSection(0));
+</script>
+
+
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

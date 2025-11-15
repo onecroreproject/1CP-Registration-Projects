@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1CroreProjects</title>
+
+    <link rel="stylesheet" href="{% static 'templatemo-glossy-touch.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="bg-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <!-- SINGLE NAVIGATION HEADER -->
+    <header>
+        <div class="container">
+            <nav class="glass">
+                <div class="hero-image">
+                    <img src="{% static 'images/watermark.webp' %}" alt="Modern Technology Interaction"
+                        style="height: 70px; width: auto;" />
+                </div>
+                <div class="logo" onclick="showPage('home')">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 48 48" fill="white" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Grid of circles with varying sizes -->
+                            <circle cx="16" cy="16" r="5" opacity="0.9" />
+                            <circle cx="32" cy="16" r="4" opacity="0.8" />
+                            <circle cx="16" cy="32" r="4" opacity="0.7" />
+                            <circle cx="32" cy="32" r="5" opacity="0.85" />
+                            <!-- Small accent dots -->
+                            <circle cx="24" cy="8" r="2" opacity="1" />
+                            <circle cx="8" cy="24" r="2" opacity="0.9" />
+                            <circle cx="40" cy="24" r="2" opacity="0.9" />
+                            <circle cx="24" cy="40" r="2" opacity="1" />
+                            <!-- Tiny corner dots -->
+                            <circle cx="8" cy="8" r="1" opacity="0.6" />
+                            <circle cx="40" cy="8" r="1" opacity="0.6" />
+                            <circle cx="8" cy="40" r="1" opacity="0.6" />
+                            <circle cx="40" cy="40" r="1" opacity="0.6" />
+                        </svg>
+                    </div>
+                    <span></span>
+                </div>
+                <div class="hero-image">
+                    <img src="{% static 'images/1croreprojects_logo.jpg' %}" alt="Modern Technology Interaction"
+                        style="height: 70px; width: auto;" />
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <header>
+        <div class="container">
+            <nav class="glass">
+                <div class="logo" onclick="showPage('home')">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 48 48" fill="white" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Grid of circles with varying sizes -->
+                            <circle cx="16" cy="16" r="5" opacity="0.9" />
+                            <circle cx="32" cy="16" r="4" opacity="0.8" />
+                            <circle cx="16" cy="32" r="4" opacity="0.7" />
+                            <circle cx="32" cy="32" r="5" opacity="0.85" />
+                            <!-- Small accent dots -->
+                            <circle cx="24" cy="8" r="2" opacity="1" />
+                            <circle cx="8" cy="24" r="2" opacity="0.9" />
+                            <circle cx="40" cy="24" r="2" opacity="0.9" />
+                            <circle cx="24" cy="40" r="2" opacity="1" />
+                            <!-- Tiny corner dots -->
+                            <circle cx="8" cy="8" r="1" opacity="0.6" />
+                            <circle cx="40" cy="8" r="1" opacity="0.6" />
+                            <circle cx="8" cy="40" r="1" opacity="0.6" />
+                            <circle cx="40" cy="40" r="1" opacity="0.6" />
+                        </svg>
+                    </div>
+                    <span>1CROREPROJECTS</span>
+                </div>
+                <div class="nav-links">
+                    <a class="dropdown-item" href="{% url 'internship:users' %}">Internship</a>
+                    <a class="dropdown-item" href="{% url 'project:users' %}">Project</a>
+                    <a class="dropdown-item" href="{% url 'training:users' %}">Training</a>
+                    <a href="#" onclick="showPage('contact')">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+
+    <!-- CONTACT PAGE -->
+    <div id="contact" class="page">
+        <div class="container">
+            <div class="content-wrapper">
+                <section class="contact-grid">
+                    <div class="contact-form glass">
+                        <h2>Get In Touch</h2>
+                        <form>
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input type="text" id="subject" name="subject" placeholder="What's this about?">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" placeholder="Tell us about your project..."
+                                    required></textarea>
+                            </div>
+                            <button type="submit" class="cta-button">Send Message</button>
+                        </form>
+                    </div>
+
+                    <div class="contact-info glass">
+                        <h2>Contact Information</h2>
+
+                        <div class="contact-item">
+                            <div class="contact-item-icon"></div>
+                            <div class="contact-item-text">
+                                <h4>Email</h4>
+                                <p>1croreprojects@gmail.com</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-item-icon"></div>
+                            <div class="contact-item-text">
+                                <h4>Phone</h4>
+                                <p>+91 7904320834</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-item-icon"></div>
+                            <div class="contact-item-text">
+                                <h4>Address</h4>
+                                <p>No - 68/70, Ground Floor, Raahat Plaza, Near Chroma<br>Vadapalani, Chennai, Tamil
+                                    Nadu 600026</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-item-icon"></div>
+                            <div class="contact-item-text">
+                                <h4>Business Hours</h4>
+                                <p>Mon-Sat: 9AM-6:30PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="d-none d-sm-block" style="height: 300px;"></div>
+
+
+    <!-- SINGLE FOOTER -->
+    <div id="footer">
+        <div class="container">
+            <footer class="glass">
+                <div class="footer-content">
+                    <div class="footer-links">
+                        <a href="#">About Us</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">XML Sitemap</a>
+                        <a href="#">Contact</a>
+                    </div>
+                    <div class="copyright">
+                        &copy; 2025 1CROREPROJECTS
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="templatemo-glossy-touch.js"></script>
+    <!-- Your Custom JS -->
+    <script src="{% static 'templatemo-glossy-touch.js' %}"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

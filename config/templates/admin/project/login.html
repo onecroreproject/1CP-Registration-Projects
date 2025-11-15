@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>1Crore - Projects | Login</title>
+  {% load static %}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description"
+    content="Datta able is trending dashboard template made using Bootstrap 5 design framework." />
+  <meta name="keywords" content="Bootstrap admin template, Dashboard UI Kit, Dashboard Template" />
+  <meta name="author" content="Codedthemes" />
+
+  <!-- [Favicon] -->
+  <link rel="icon" href="{% static 'images/watermark.webp' %}" type="image/x-icon" />
+
+  <!-- [Font] Family -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- [Icons] -->
+  <link rel="stylesheet" href="{% static 'assets/fonts/tabler-icons.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/fonts/feather.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/fonts/material.css' %}" />
+
+  <!-- [CSS Files] -->
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" id="main-style-link" />
+  <link rel="stylesheet" href="{% static 'assets/css/style-preset.css' %}" />
+
+  <!-- Bootstrap 5 + Icons CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- SweetAlert2 CSS and JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+  <style>
+    .form-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6c757d;
+    }
+
+    .form-control {
+      padding-left: 2.5rem;
+    }
+
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-primary:hover {
+      background-color: #0069d9;
+    }
+  </style>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-14K1GBX9FG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-14K1GBX9FG');
+  </script>
+
+  <!-- WiserNotify -->
+  <script>
+    !(function () {
+      if (window.t4hto4) console.log('WiserNotify pixel installed multiple times');
+      else {
+        window.t4hto4 = true;
+        var e = document.createElement('script');
+        e.type = 'text/javascript';
+        e.async = true;
+        e.src = 'https://pt.wisernotify.com/pixel.js?ti=1jclj6jkfc4hhry';
+        document.body.appendChild(e);
+      }
+    })();
+  </script>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function (c, l, a, r, i, t, y) {
+      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+      t = l.createElement(r);
+      t.async = 1;
+      t.src = 'https://www.clarity.ms/tag/' + i;
+      y = l.getElementsByTagName(r)[0];
+      y.parentNode.insertBefore(t, y);
+    })(window, document, 'clarity', 'script', 'gkn6wuhrtb');
+  </script>
+</head>
+
+<body data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" data-pc-theme="light">
+  <!-- Pre-loader -->
+  <div class="loader-bg">
+    <div class="loader-track">
+      <div class="loader-fill"></div>
+    </div>
+  </div>
+  <!-- Login Form -->
+  <div class="auth-main">
+    <div class="auth-wrapper v1">
+      <div class="auth-form">
+        <div class="position-relative my-5">
+          <div class="auth-bg">
+            <span class="r"></span>
+            <span class="r s"></span>
+            <span class="r s"></span>
+            <span class="r"></span>
+          </div>
+          <div class="card mb-0">
+            <div class="card-body p-4">
+              <h2 class="text-center mb-4">{{ title|default:"Admin Login" }}</h2>
+
+              <form method="post">
+                {% csrf_token %}
+
+                <div class="mb-3 position-relative">
+                  <i class="bi bi-person-fill form-icon"></i>
+                  <input type="text" name="username" id="id_username" class="form-control" placeholder="Username"
+                    required>
+                </div>
+
+                <div class="mb-3 position-relative">
+                  <i class="bi bi-lock-fill form-icon"></i>
+                  <input type="password" name="password" id="id_password" class="form-control" placeholder="Password"
+                    required>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                </div>
+
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Required JS -->
+  <script src="{% static 'assets/js/plugins/popper.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/simplebar.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/bootstrap.min.js' %}"></script>
+  <script src="{% static 'assets/js/fonts/custom-font.js' %}"></script>
+  <script src="{% static 'assets/js/script.js' %}"></script>
+  <script src="{% static 'assets/js/theme.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/feather.min.js' %}"></script>
+
+  <!-- Theme Config Scripts -->
+  <script>layout_change('light');</script>
+  <script>change_box_container('false');</script>
+  <script>layout_caption_change('true');</script>
+  <script>layout_rtl_change('false');</script>
+  <script>preset_change('preset-1');</script>
+  <script>layout_theme_sidebar_change('false');</script>
+
+  <!-- Bootstrap JS CDN (Optional) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Save current URL before redirecting
+      window.addEventListener('offline', function () {
+        if (window.location.pathname !== "/offline/") {
+          localStorage.setItem('lastPage', window.location.href);
+          window.location.href = "/offline/";
+        }
+      });
+
+      // Reload only if not already on the offline page
+      window.addEventListener('online', function () {
+        if (window.location.pathname === "/offline/") {
+          const lastPage = localStorage.getItem('lastPage');
+          if (lastPage) {
+            window.location.href = lastPage;
+          }
+        } else {
+          location.reload();
+        }
+      });
+
+      // Poll as fallback
+      setInterval(function () {
+        if (navigator.onLine && window.location.pathname === "/offline/") {
+          const lastPage = localStorage.getItem('lastPage');
+          if (lastPage) {
+            window.location.href = lastPage;
+          }
+        }
+      }, 5000);
+    });
+  </script>
+
+  {% if messages %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      {% for message in messages %}
+      Swal.fire({
+        toast: true,
+        position: 'top-end',  // Top-right corner
+        icon: '{% if message.tags == "error" %}error{% elif message.tags == "warning" %}warning{% elif message.tags == "info" %}info{% else %}success{% endif %}',
+        title: "{{ message|escapejs }}",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      });
+      {% endfor %}
+    });
+  </script>
+  {% endif %}
+
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Processing Payment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        setTimeout(function () {
+            window.location.href = "{% url 'training:success' payment_id=payment_id %}";
+        }, 3000);
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f9f9f9;
+            flex-direction: column;
+        }
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .message {
+            text-align: center;
+            color: #444;
+            max-width: 90%;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="loader"></div>
+    <div class="message">
+            <h4>Your payment is processing... <br> <strong>Receipt will be emailed</strong>—check inbox or spam folder soon.</h4>
+    </div>
+</body>
+</html>

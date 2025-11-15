@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>1Crore - Projects</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-green-energy-renewable-energy-flaticons-flat-flat-icons.png" type="image/x-icon">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+            color: #000;
+        }
+
+        .container{
+            background-color: #fff;
+            padding: 40px;
+            border: 1px solid #dee2e6;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            margin: 30px auto;
+
+        }
+
+        .document-box {
+            background-color: #fff;
+            padding: 40px;
+            /* border: 1px solid #dee2e6;
+            border-radius: 15px; */
+            /* box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); */
+            margin: 30px auto;
+        }
+
+        h1 {
+            font-weight: 600;
+            text-align: center;
+            color: #fff;
+            background-color: #28a745;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        h2 {
+            color: #28a745;
+            font-weight: 800;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-size: 20px;
+            padding: 0;
+        }
+
+        ul {
+            padding-left: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .terms-footer {
+            font-weight: 600;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .form-check-label {
+            font-weight: 500;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 0;
+        }
+
+        .timeline li {
+            text-align: center;
+            flex: 1;
+        }
+
+        .timeline-step {
+            width: 20px;
+            height: 20px;
+            margin: 0 auto 5px;
+            border-radius: 50%;
+            background: gray;
+        }
+
+        .active .timeline-step {
+            background: blue;
+        }
+
+        .completed .timeline-step {
+            background: green;
+        }
+
+        .disabled a {
+            pointer-events: none;
+            color: #aaa;
+        }
+
+        .disabled .timeline-step {
+            background: #ccc;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        @media (max-width: 576px) {
+            body,
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6,
+            p,
+            ul,
+            li,
+            .btn,
+            .form-check-label,
+            .terms-footer,
+            .timeline li span {
+                font-size: 90% !important;
+            }
+
+            h1 {
+                font-size: 18px !important;
+            }
+
+            h2 {
+                font-size: 16px !important;
+            }
+
+            .btn {
+                font-size: 14px !important;
+                padding: 8px 16px !important;
+            }
+
+            .timeline-step {
+                width: 16px;
+                height: 16px;
+            }
+
+            .container,
+            .document-box {
+                padding: 20px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+        <h1>Internship Registration Form</h1><br>
+    
+<div class="container">
+
+
+ 
+    <ul class="timeline">
+        <li id="step-terms" class="active">
+            <a href="#" onclick="completeStep('terms')">
+                <div class="timeline-step"></div>
+                <span>Terms</span>
+            </a>
+        </li>
+        <li id="step-register" class="disabled">
+            <a href="#" onclick="completeStep('register')">
+                <div class="timeline-step"></div>
+                <span>Register</span>
+            </a>
+        </li>
+        <li id="step-payment" class="disabled">
+            <a href="#" onclick="completeStep('payment')">
+                <div class="timeline-step"></div>
+                <span>Payment</span>
+            </a>
+        </li>
+        <li id="step-success" class="disabled">
+            <a href="#" onclick="completeStep('success')">
+                <div class="timeline-step"></div>
+                <span>Success</span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="document-box col-lg-10 col-xl-8">
+        <h1>Steps to Verify OTP & Access Dashboard</h1>
+
+            <h2>1. OTP Verification</h2>
+            <ul>
+                <li>If you are already registered, please enter your registered email ID and click the <strong>Send OTP</strong> button. Wait a few seconds to receive a One-Time Password (OTP).</li>
+                <li>Check your email inbox for the OTP, enter it within one minute, and click the <strong>Verify OTP</strong> button.</li>
+                <li>Once verified, you will be redirected to your personal dashboard.</li>
+            </ul>
+
+            <h2>2. Dashboard Overview</h2>
+            <ul>
+                <li>Your dashboard displays your personal and academic details.</li>
+                <li>Locate and click the <strong>Select</strong> button next to your name or student ID.</li>
+                <li>You will see three options: <strong>Topic Update</strong>, <strong>Advance Payment</strong>, and <strong>Full Payment</strong>.</li>
+            </ul>
+
+            <h2>3. Topic Update</h2>
+            <ul>
+                <li>If you haven’t selected a topic yet, you can manually add one here.</li>
+                <li>If you’ve already submitted a topic and wish to change it, you must do so <strong>before making the advance payment</strong>. Topic changes will not be allowed after the payment process begins.</li>
+            </ul>
+
+            <h2>4. Payments</h2>
+            <ul>
+                <li><strong>Advance Payment</strong> – for partial upfront payment.</li>
+                <li><strong>Full Payment</strong> – to complete the entire payment at once.</li>
+                <li>Clicking either option will take you directly to the available payment methods.</li>
+            </ul>
+
+            <p class="terms-footer text-center mt-4">
+                Please follow the above steps carefully to complete your project registration process.
+            </p>
+
+        <form method="POST" class="text-center">
+            {% csrf_token %}
+            <div class="form-check d-flex justify-content-center mb-3">
+                <input class="form-check-input me-2" type="checkbox" name="agree_terms" id="agree_terms" required>
+                <label class="form-check-label" for="agree_terms">
+                    I have read and understood the instructions above
+                </label>
+            </div>
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-success px-4">Proceed</button>
+                    <a href="/" class="btn btn-danger px-4">Cancel</a>
+                </div>
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

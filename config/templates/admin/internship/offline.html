@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>No Internet - 1CroreProjects</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #fff5f5, #ffe3e3);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .error-icon {
+      font-size: 6rem;
+      color: #dc3545;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.1);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #c82333;
+      margin-top: 20px;
+    }
+
+    .message {
+      font-size: 1.25rem;
+      margin-top: 10px;
+      color: #555;
+      max-width: 500px;
+    }
+
+    .btn-retry {
+      margin-top: 30px;
+      padding: 12px 24px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-retry:hover {
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="text-center">
+    <i class="bi bi-wifi-off error-icon"></i>
+    <div class="title">You're Offline</div>
+    <div class="message">
+      Oops! It looks like you’ve lost your internet connection.<br>
+      Please check your network and try again.
+    </div>
+    <button class="btn btn-outline-danger btn-retry mt-4" onclick="retryLastPage();">
+      <i class="bi bi-arrow-repeat me-2"></i> Try Again
+    </button>
+  </div>
+
+  <script>
+    function retryLastPage() {
+      const lastPage = localStorage.getItem('lastPage');
+      if (lastPage) {
+        window.location.href = lastPage;
+      } else {
+        location.reload();
+      }
+    }
+  </script>
+
+</body>
+
+</html>

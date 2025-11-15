@@ -1,0 +1,275 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>1Crore - Projects</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-green-energy-renewable-energy-flaticons-flat-flat-icons.png"
+        type="image/x-icon">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        body {
+            background-color: #ffffff;
+            /* pure white background */
+            font-family: 'Poppins', sans-serif;
+            color: #000000;
+            /* black text */
+        }
+
+        .document-box {
+            background-color: #fff;
+            padding: 40px;
+            border: 1px solid #dee2e6;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            margin: 30px auto;
+        }
+
+        h1 {
+            font-weight: 600;
+            text-align: center;
+            color: #fff;
+            background-color: #28a745;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+
+        .timeline {
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 0;
+        }
+
+        .timeline li {
+            text-align: center;
+            flex: 1;
+        }
+
+        .timeline-step {
+            width: 20px;
+            height: 20px;
+            margin: 0 auto 5px;
+            border-radius: 50%;
+            background: gray;
+        }
+
+        .active .timeline-step {
+            background: blue;
+        }
+
+        .completed .timeline-step {
+            background: green;
+        }
+
+        .disabled a {
+            pointer-events: none;
+            color: #aaa;
+        }
+
+        .disabled .timeline-step {
+            background: #ccc;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .payment-card {
+            background-color: #fff;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .payment-card h2 {
+            color: #28a745;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        .pay-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .pay-button:hover {
+            background-color: #0056b3;
+        }
+
+        .end {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        /* .end h1 {
+            font-size: 18px;
+            color: #dc3545;
+        } */
+
+        .end h3 {
+            font-size: 16px;
+        }
+
+        .paymentbutton button {
+            color: white;
+            background-color: #28a745;
+            margin: 60px;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            justify-content: center;
+        }
+
+        @media (max-width: 767.98px) {
+
+            body,
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6,
+            p,
+            span,
+            label,
+            button,
+            input,
+            select {
+                font-size: 90% !important;
+                /* Reduce all general font sizes slightly */
+            }
+
+            h1 {
+                font-size: 18px !important;
+            }
+
+            h2 {
+                font-size: 16px !important;
+            }
+
+            .paymentbutton button {
+                margin: 20px !important;
+                width: 100% !important;
+                font-size: 14px !important;
+            }
+
+            .timeline span {
+                font-size: 12px !important;
+            }
+
+            .alert {
+                font-size: 14px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Project Registration Form</h1>
+
+    <div class="container">
+        <!-- Timeline Navigation -->
+        <ul class="timeline">
+            <li id="step-terms" class="completed">
+                <a href="#">
+                    <div class="timeline-step"></div><span>Terms</span>
+                </a>
+            </li>
+            <li id="step-register" class="completed">
+                <a href="#">
+                    <div class="timeline-step"></div><span>Register</span>
+                </a>
+            </li>
+            <li id="step-payment" class="active">
+                <a href="#">
+                    <div class="timeline-step"></div><span>Payment</span>
+                </a>
+            </li>
+            <li id="step-success" class="disabled">
+                <a href="#">
+                    <div class="timeline-step"></div><span>Success</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Payment Method Selection -->
+        <div class="payment-card container p-4 mb-4">
+            <h2>Choose Payment Method</h2>
+
+            <div class="paymentbutton">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="registration_id" value="{{ registration.id }}">
+                    <div class="d-flex flex-row justify-content-center align-items-center">
+                        <button type="submit" name="payment_method" value="cash">Cash Payment</button>
+                        <button type="submit" name="payment_method" value="online">Online Payment</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    {% if messages %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            {% for message in messages %}
+            Swal.fire({
+                toast: true,
+                position: 'top-end',  // Top-right corner
+                icon: '{% if message.tags == "error" %}error{% elif message.tags == "warning" %}warning{% elif message.tags == "info" %}info{% else %}success{% endif %}',
+                title: "{{ message|escapejs }}",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+            {% endfor %}
+        });
+    </script>
+    {% endif %}
+
+
+    <!-- Bootstrap Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
